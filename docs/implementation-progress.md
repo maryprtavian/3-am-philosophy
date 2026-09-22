@@ -134,3 +134,43 @@ Status: complete, 23 September 2026.
 The content is ready to drive a session. Entry-point selection, answering, backtracking, and restart
 behavior remain Step 04; the browser's question interface remains Step 05. The larger 40–60-question
 v1 library remains Step 09.
+
+## Step 04 — Branching and session engine
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Added a pure session reducer with start, answer, back, forward, leave, another-hole, and full-reset
+  actions. The engine validates and indexes the content once, independently of React.
+- Separated the route, current position, and visited openings from authored text. The route records
+  the selected answer even when both choices share a pause.
+- Implemented back/forward navigation through the route and back from the entry to welcome.
+  Answering after going back replaces all forward history; forward navigation restores it without
+  selecting a new answer.
+- Entry selection takes a supplied random sample, so reducers stay deterministic. It prefers
+  unseen openings and explicitly reports when only revisits remain. Revisits avoid the last opening
+  when another is available and still work for a single-opening collection.
+- Leaving and starting another hole clear the route while preserving visited openings. A full reset
+  clears the entire visit. State remains in memory, ready for the upcoming UI integration.
+- Invalid or unavailable actions leave state unchanged. Answers identify their question, allowing
+  the engine to reject a duplicate event from a question that is no longer current.
+- Added an engine guide covering the API, navigation boundaries, finite-content wording, and the
+  division between reducer behavior and later browser integration. No new dependencies were needed.
+
+### Verification
+
+- All **103 tests passed**: the existing 65 content/validator tests plus 38 engine tests.
+- Engine tests cover transitions, both answers, pause/back/restart behavior, branch replacement,
+  deterministic selection, exhaustion, a single-entry library, invalid actions, and frozen inputs.
+- Integration cases traverse all **26 complete starter-library routes** through the reducer,
+  verify back/forward at every answer, and enter the other opening from every pause.
+- `npm run check` passed TypeScript, ESLint with no warnings, formatting, all tests, and the
+  production build. The current UI bundle remains unchanged because engine integration is Step 05.
+
+### Scope boundary
+
+The complete session behavior is ready and tested independently of rendered components. The local
+page still shows the foundation screen. Step 05 connects the real content and engine to welcome,
+question, and pause views and adds a browser smoke test. Responsive styling remains Step 06;
+History API integration, transitions, and full rapid-input/focus handling remain Step 07.
