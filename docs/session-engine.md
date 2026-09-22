@@ -85,5 +85,6 @@ finite-content reporting, input preservation, and invalid content/actions. Integ
 all 26 complete answer sequences in the authored starter library through the reducer, checking
 back/forward at every edge and selecting another opening at every pause.
 
-Run `npm test` for behavior checks or `npm run check` for the complete quality gate. Rendering and
-browser interaction are introduced in the following steps.
+Run `npm test` for behavior checks or `npm run check` for the complete quality gate. Step 05 now
+connects the engine to the playable UI and adds browser smoke tests; see the
+[first playable version notes](./first-playable.md). Browser History API integration remains Step 07.

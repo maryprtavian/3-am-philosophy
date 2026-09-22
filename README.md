@@ -2,10 +2,9 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–4 establish the project foundation, typed content contract, tested graph validator, authored
-starter library, and session engine. The library has 19 questions across two entry paths, and the
-engine supports complete visits independently of the UI. The app currently renders a minimal
-landing screen; the playable interface arrives in Step 5.
+Steps 1–5 are complete. The first playable interface connects 19 authored questions across two
+openings to the session engine. Start with one button, follow two-answer questions to a pause, go
+back, leave, or explore another rabbit hole. Refresh starts a new visit.
 
 ## Requirements
 
@@ -29,22 +28,37 @@ local to your computer by default.
 
 ## Commands
 
-| Command                | Purpose                                                                   |
-| ---------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`          | Start the development server with hot updates                             |
-| `npm run build`        | Type-check and build the static site into `dist/`                         |
-| `npm run preview`      | Serve the production build locally; run `build` first                     |
-| `npm run typecheck`    | Check the app and Vite configuration with TypeScript                      |
-| `npm run lint`         | Run ESLint, treating warnings as failures                                 |
-| `npm run lint:fix`     | Apply automatic lint fixes where available                                |
-| `npm run format`       | Format project files with Prettier                                        |
-| `npm run format:check` | Check formatting without changing files                                   |
-| `npm test`             | Run content validation, library, and session behavior tests once          |
-| `npm run test:watch`   | Rerun tests as files change                                               |
-| `npm run check`        | Run type checks, lint, formatting checks, tests, and the production build |
+| Command                    | Purpose                                                                 |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`              | Start the development server with hot updates                           |
+| `npm run build`            | Type-check and build the static site into `dist/`                       |
+| `npm run preview`          | Serve the production build locally; run `build` first                   |
+| `npm run typecheck`        | Check the app and Vite configuration with TypeScript                    |
+| `npm run lint`             | Run ESLint, treating warnings as failures                               |
+| `npm run lint:fix`         | Apply automatic lint fixes where available                              |
+| `npm run format`           | Format project files with Prettier                                      |
+| `npm run format:check`     | Check formatting without changing files                                 |
+| `npm test`                 | Run content validation, library, and session behavior tests once        |
+| `npm run test:watch`       | Rerun tests as files change                                             |
+| `npm run test:e2e:install` | Install Playwright's headless Chromium browser                          |
+| `npm run test:e2e`         | Type-check, build, and run the browser smoke tests                      |
+| `npm run check`            | Run type checks, lint, formatting, unit tests, build, and browser tests |
 
 `preview` is a local build check, not a production hosting server. Vitest runs the validator,
-library, and session behavior tests in Node. Browser tests arrive with the playable interface.
+library, and session behavior tests in Node. Playwright tests the production build in headless
+Chromium with desktop/light and mobile/dark configurations.
+
+Before the first browser test run, install the matching browser:
+
+```sh
+npm run test:e2e:install
+npm run check
+```
+
+Repeat browser installation after a Playwright upgrade. The runner starts and stops its own preview
+server on `http://127.0.0.1:4175`; keep that port free. It does not reuse the development server.
+Failure traces and screenshots go in the ignored `test-results/` directory. See the
+[first playable version notes](docs/first-playable.md) for test coverage and remaining checks.
 
 ## Source layout
 
@@ -56,12 +70,13 @@ src/
   engine/          Content validator, pure session engine, and behavioral tests
   styles/          Shared styles and design tokens
 public/            Static assets copied into the build
+e2e/               Playwright browser journeys against the production build
 docs/              Research, implementation roadmap, and progress notes
 ```
 
 Keep questions separate from the UI, and keep traversal logic independent of React. Use CSS Modules
-for component styles and CSS custom properties for shared values. The current screen is a setup
-placeholder; the full responsive design arrives in Step 6.
+for component styles and CSS custom properties for shared values. The initial readable layout is
+playable; the full responsive design is Step 6, and browser Back/Forward integration is Step 7.
 
 ## Development conventions
 
@@ -96,3 +111,4 @@ installation.
 - [Content contract and authoring guide](docs/content-authoring.md)
 - [Starter content review](docs/starter-content-review.md)
 - [Session engine and integration guide](docs/session-engine.md)
+- [First playable version and browser checks](docs/first-playable.md)

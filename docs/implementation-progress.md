@@ -174,3 +174,46 @@ The complete session behavior is ready and tested independently of rendered comp
 page still shows the foundation screen. Step 05 connects the real content and engine to welcome,
 question, and pause views and adds a browser smoke test. Responsive styling remains Step 06;
 History API integration, transitions, and full rapid-input/focus handling remain Step 07.
+
+## Step 05 — First playable interface
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Connected the authored library and session engine to React with `useReducer`, keeping content
+  and transitions independent of rendering.
+- Replaced the foundation screen with welcome, question, and pause views. Welcome has exactly one
+  button; each question has two equal-emphasis answers and quiet back/leave navigation.
+- Added another-hole and revisit actions with wording that acknowledges the finite collection.
+  Leaving preserves tried openings, and refresh starts a fresh visit.
+- Used semantic headings, native buttons, plain-text rendering, visible focus, and heading focus
+  after navigation. Pause text is associated with its heading as an accessible description; no
+  live region competes with the focus announcement strategy.
+- Added the first readable CSS layout and control styles in the agreed palette, with stacked
+  answers, long-label wrapping, and light/dark appearance following the system.
+- Added Playwright Test 1.63.0 and a pinned lockfile update, a managed production-preview test
+  server, browser installation/test scripts, and strict TypeScript/ESLint coverage for browser tests.
+- Added four browser scenarios in desktop/light and mobile/dark configurations. The combined
+  quality gate now includes these eight checks after the existing unit tests and build.
+- Updated setup instructions and documented the first playable milestone and remaining boundaries.
+
+### Verification
+
+- All **103 content/engine tests** and **eight Playwright browser tests** passed. Browser coverage
+  includes both openings, pauses, backtracking, changing an answer, leaving, revisiting, refresh,
+  keyboard activation, focus movement, and accessible pause descriptions.
+- TypeScript, typed ESLint, Prettier, and the production build passed. The initial browser run was
+  blocked by Windows sandbox process-launch permissions (`spawn EPERM`); rerunning with the required
+  execution permissions passed all eight scenarios.
+- Manually completed a route and started another in the in-app browser. Inspected the desktop
+  question view, pause view, and the longest question at 390 CSS pixels. The narrow view had no
+  horizontal overflow and the long-answer controls wrapped at approximately 342 × 82 CSS pixels.
+- The production JavaScript bundle is **73.37 kB gzip**, with **0.96 kB gzip** of CSS. This includes
+  the actual library, validator, session engine, and interactive UI.
+
+### Scope boundary
+
+The app is now playable locally. The initial browser checks use Chromium and mobile emulation;
+physical devices and spoken screen-reader output have not been tested. Step 06 refines responsive
+visual design. Step 07 integrates browser history and finishes transitions and rapid-input handling.

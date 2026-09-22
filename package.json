@@ -20,7 +20,9 @@
     "format:check": "prettier . --check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "tsc -b && eslint . --max-warnings=0 && prettier . --check && vitest run && vite build"
+    "test:e2e:install": "playwright install chromium --only-shell",
+    "test:e2e": "tsc -b && vite build && playwright test",
+    "check": "tsc -b && eslint . --max-warnings=0 && prettier . --check && vitest run && vite build && playwright test"
   },
   "dependencies": {
     "react": "^19.2.8",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
     "@types/node": "22.20.4",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

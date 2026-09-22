@@ -3,6 +3,11 @@
   --color-background: light-dark(#f5f0e7, #171819);
   --color-text: light-dark(#282923, #f1ecdf);
   --color-text-muted: light-dark(#64645b, #adaea3);
+  --color-control: light-dark(#fffaf1, #202222);
+  --color-border: light-dark(#b4ac9d, #56594f);
+  --color-accent: light-dark(#80501c, #dfb879);
+  --color-primary: light-dark(#79501d, #dfb879);
+  --color-primary-text: light-dark(#fffaf1, #24241e);
 
   font-family: Arial, Helvetica, sans-serif;
   font-synthesis: none;
@@ -20,4 +25,15 @@
 body {
   margin: 0;
   min-width: 320px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 5px;
 }

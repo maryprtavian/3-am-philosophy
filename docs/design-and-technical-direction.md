@@ -2,9 +2,10 @@
 
 Research and proposed implementation direction — 23 September 2026.
 
-Status: research and a small interactive design concept are complete. The project foundation has now
-been scaffolded and verified in Step 01; the question experience and deployment remain planned. The
-project directory was empty at the initial research inspection.
+Status: research and a small interactive design concept are complete. Steps 01–05 now provide the
+first playable implementation; see the [roadmap](./implementation-roadmap.md) for current progress.
+The project directory was empty at the initial research inspection. The decisions below record the
+original direction, including verification still scheduled for later steps.
 
 Concept verification: inspected the opening and question layouts at desktop width and the question layouts at 375 and 320 CSS pixels. Both initial answers reached distinct follow-up questions; the back control restored the root question. At 320 pixels, the document had no horizontal overflow and both answer buttons measured 280 × 60 CSS pixels. The preview reported no browser console errors. This is a limited prototype check, not the production release checks described below.
 
