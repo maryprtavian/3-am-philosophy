@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light dark;
+  --color-background: light-dark(#f5f0e7, #171819);
+  --color-text: light-dark(#282923, #f1ecdf);
+  --color-text-muted: light-dark(#64645b, #adaea3);
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}

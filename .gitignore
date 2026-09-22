@@ -1,0 +1,26 @@
+# Dependencies, generated output, and local tooling caches
+node_modules/
+dist/
+coverage/
+.npm-cache/
+*.tsbuildinfo
+
+# Future browser-test output
+playwright-report/
+test-results/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.local
+*.log
+
+# Editors and operating systems
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.DS_Store
+Thumbs.db
+Desktop.ini
