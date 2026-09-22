@@ -2,9 +2,9 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–2 establish the project foundation, typed content contract, and tested graph validator. The
-app currently renders a minimal landing screen; the playable question collection and branching
-behavior are planned for subsequent steps.
+Steps 1–3 establish the project foundation, typed content contract, tested graph validator, and
+authored starter library: 19 questions across two entry paths. The app currently renders a minimal
+landing screen. The session engine and interactive question view arrive in Steps 4–5.
 
 ## Requirements
 
@@ -38,12 +38,12 @@ local to your computer by default.
 | `npm run lint:fix`     | Apply automatic lint fixes where available                                |
 | `npm run format`       | Format project files with Prettier                                        |
 | `npm run format:check` | Check formatting without changing files                                   |
-| `npm test`             | Run the content validator tests once                                      |
+| `npm test`             | Run the validator and complete-library tests once                         |
 | `npm run test:watch`   | Rerun tests as files change                                               |
 | `npm run check`        | Run type checks, lint, formatting checks, tests, and the production build |
 
-`preview` is a local build check, not a production hosting server. Vitest runs the validator tests
-in Node. Session behavior tests and browser tests will be added with their respective features.
+`preview` is a local build check, not a production hosting server. Vitest runs the validator and
+library tests in Node. Session behavior tests and browser tests will be added with their features.
 
 ## Source layout
 
@@ -51,7 +51,7 @@ in Node. Session behavior tests and browser tests will be added with their respe
 src/
   main.tsx          React entry point
   components/      React UI and colocated CSS Modules
-  content/         Question/pause types and a small contract example
+  content/         Types, authored collections, combined library, and content tests
   engine/          Content validator and tests; traversal arrives in Step 4
   styles/          Shared styles and design tokens
 public/            Static assets copied into the build
@@ -93,3 +93,4 @@ installation.
 - [Implementation roadmap](docs/implementation-roadmap.md)
 - [Implementation progress](docs/implementation-progress.md)
 - [Content contract and authoring guide](docs/content-authoring.md)
+- [Starter content review](docs/starter-content-review.md)

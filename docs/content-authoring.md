@@ -1,8 +1,9 @@
 # Content contract and authoring guide
 
 Step 2 defines how a collection is written and checked. The small collection in
-`src/content/example.ts` demonstrates the contract; it is not the complete playable rabbit hole.
-Step 3 will write that collection.
+`src/content/example.ts` demonstrates the contract and is kept separate from the playable data.
+Step 3 adds the authored library in `src/content/library.ts`, combining the immortality and perfect
+copy collections from `src/content/collections/`.
 
 ## Structure
 
@@ -114,10 +115,14 @@ Fix errors in earlier phases before expecting graph diagnostics. This prevents a
 from producing a cascade of misleading reachability errors. All errors found within a phase are
 returned together.
 
-Run `npm test` for the validator tests or `npm run test:watch` while editing. `npm run check` also
+Run `npm test` for the validator and library tests or `npm run test:watch` while editing. `npm run check` also
 runs the tests before building. On the initial Windows setup, use the bundled npm workaround in the
 README if the global launcher fails.
 
-When Step 3 adds the playable collection, add an assertion that validates the complete collection
-to the test suite, just as the current suite validates `exampleContent`. Adding a new export alone
-does not automatically register it for validation.
+`src/content/library.test.ts` validates the complete `content` export, checks route lengths, and
+checks that choices branch before reaching a pause. Add future collections to `src/content/library.ts`
+so they are included in that check. Adding an unrelated export alone does not register it for
+validation. The validator tests separately retain the minimal `exampleContent` fixture.
+
+See [starter content review](./starter-content-review.md) for the first library's route inventory,
+editorial decisions, and long-content case for later layout checks.

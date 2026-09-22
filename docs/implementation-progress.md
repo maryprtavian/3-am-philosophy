@@ -94,3 +94,43 @@ Status: complete, 23 September 2026.
 The validator is ready to check the playable collection when it is written in Step 03. That
 collection must be explicitly included in a validation test; arbitrary content exports are not
 automatically discovered. Session traversal remains Step 04, and the interactive UI remains Step 05.
+
+## Step 03 — First complete rabbit hole
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Expanded the immortality premise into 14 questions and three reflective pauses. Its 18 complete
+  answer sequences contain four or five questions each.
+- Added a shorter perfect-copy collection with five questions, one pause, and eight complete answer
+  sequences of three questions each.
+- Added `src/content/library.ts` as the single combined `content` export for the future session
+  engine. The minimal contract example remains separate from the authored library.
+- Included distinct follow-up questions for both starting answers and controlled convergence deeper
+  in the graph. Final answers can share a pause without being scored or judged.
+- Added an invitation to keep thinking or explore another rabbit hole to every pause.
+- Included a long-content case at `keeping-memories`: a 154-character question and an answer of 66
+  characters, ready for the later mobile/desktop layout checks.
+- Enumerated and read all 26 complete question/answer sequences. Reviewed shared questions against
+  every incoming answer, and refined the wording around forgotten kindness and remembered promises.
+- Registered the combined library in six integration tests covering validation, path lengths,
+  distinct opening branches, and convergence only at a pause when both answers share a destination.
+- Updated the authoring instructions and recorded the route inventory and editorial decisions in
+  `docs/starter-content-review.md`.
+
+### Verification
+
+- All **65 tests passed**: the existing 59 validator tests plus six library tests.
+- `npm run check` passed TypeScript, ESLint with no warnings, formatting, tests, and the production
+  build. There are no new dependencies.
+- The full library passes graph validation: 19 questions, four pauses, and two entry points, with
+  no duplicate IDs, broken links, unreachable nodes, or cycles.
+- Editorial review covered every complete answer sequence. This was a review of the authored data;
+  external user feedback and visual layout checks have not been performed for these questions yet.
+
+### Scope boundary
+
+The content is ready to drive a session. Entry-point selection, answering, backtracking, and restart
+behavior remain Step 04; the browser's question interface remains Step 05. The larger 40–60-question
+v1 library remains Step 09.

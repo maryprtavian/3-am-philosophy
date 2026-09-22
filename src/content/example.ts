@@ -1,6 +1,6 @@
 import type { ContentGraph } from './types'
 
-/** Contract example for authors and tests; the playable collection arrives in Step 3. */
+/** Minimal contract example for authors and validator tests; not part of the playable library. */
 export const exampleContent = {
   entryPoints: ['immortality'],
   nodes: [
