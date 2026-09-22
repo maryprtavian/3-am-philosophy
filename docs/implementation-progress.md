@@ -217,3 +217,43 @@ Status: complete, 23 September 2026.
 The app is now playable locally. The initial browser checks use Chromium and mobile emulation;
 physical devices and spoken screen-reader output have not been tested. Step 06 refines responsive
 visual design. Step 07 integrates browser history and finishes transitions and rapid-input handling.
+
+## Step 06 — Responsive layout and visual design
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Established shared CSS tokens for the palette, typography, spacing, reading width, target sizes,
+  radii, focus, and future motion. Kept styles in the existing CSS Module and global token sheet.
+- Refined the serif question and opening typography, system-font controls, rounded primary action,
+  and charcoal/ivory/amber and warm-paper appearances. Strengthened answer borders in both schemes.
+- Implemented equal-width answer columns when short labels fit, with automatic stacking for longer
+  labels and narrow screens. Intrinsic CSS sizing handles label length without a resize listener.
+- Kept the reading region centered and capped at 608 pixels at the default text size, with fluid
+  gutters and spacing. Long content scrolls naturally; short screens use tighter vertical spacing.
+- Added dynamic viewport minimum height with fallbacks, safe-area padding, and `viewport-fit=cover`.
+  Removed the fixed body minimum width and preserved text scaling and ordinary zoom behavior.
+- Enforced at least 52-pixel answer targets and 44 × 44-pixel secondary controls, with wrapping
+  labels, visible focus, and hover effects only on hover-capable devices.
+- Added a separate responsive Playwright project and 20 layout checks; no dependencies were added.
+
+### Verification
+
+- `npm run check` passed type checking, ESLint, formatting, **103 unit tests**, the production build,
+  and **28 browser tests** (eight existing journeys plus 20 new layout checks).
+- Welcome, short-answer questions, the longest starter question/labels, and pause screens passed
+  checks at 320, 375, 390, 768, and 1440 pixels, plus 844 × 390 and 1280 × 480, in both themes.
+- Tests found no horizontal overflow, clipped text, overlapping content, or undersized controls.
+  They also verified equal answer widths, appropriate stacking, and reachable navigation.
+- Extra checks passed for 200% text size at 320 pixels, changing viewport height during a question,
+  and computed text/control contrast in each scheme.
+- Visually reviewed representative full-page browser captures across the matrix and inspected the
+  updated opening screen in the in-app preview. Review details are in `docs/responsive-design.md`.
+- Production assets measure **73.39 kB gzip** of JavaScript and **1.64 kB gzip** of CSS.
+
+### Scope boundary
+
+The responsive design step is complete. Physical notch/chrome behavior, actual browser zoom,
+screen-reader output, Firefox, and WebKit remain later verification. Step 07 adds browser history,
+screen transitions, and rapid-input handling using the established session engine and motion tokens.

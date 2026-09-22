@@ -2,7 +2,7 @@
 
 The 3 A.M. Philosophy Button
 
-Status: Steps 01–05 are complete. Step 06 is next. Research and the exploratory UI concept are complete.
+Status: Steps 01–06 are complete. Step 07 is next. Research and the exploratory UI concept are complete.
 
 This roadmap implements the decisions in [Design and technical direction](./design-and-technical-direction.md). Work through the steps in order. Each step should leave a working, reviewable result. Keep code changes focused, and add relevant tests alongside behavior rather than postponing all testing until the end.
 
@@ -99,6 +99,9 @@ Completed on 23 September 2026. See [implementation progress](./implementation-p
 **Milestone: first playable version.**
 
 ## 06 — Implement responsive layout and visual design
+
+Completed on 23 September 2026. See [implementation progress](./implementation-progress.md) and the
+[responsive design notes](./responsive-design.md).
 
 **Work**
 
@@ -233,7 +236,7 @@ Completed on 23 September 2026. See [implementation progress](./implementation-p
 
 ## Execution notes
 
-- Research and Steps 01–05 are complete. Step 06 is the next implementation step.
+- Research and Steps 01–06 are complete. Step 07 is the next implementation step.
 - Keep code, content, and related tests together in reviewable changes. Use milestone reviews after steps 05, 07, 13, and 14.
 - Content editing can progress alongside independent UI work once the content contract is stable; the overall acceptance sequence remains the same.
 - External inputs may be needed for feedback participants, physical test devices, repository access, hosting access, and an optional custom domain. Record unavailable inputs honestly and continue work that does not depend on them.

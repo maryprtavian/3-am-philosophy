@@ -2,9 +2,10 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–5 are complete. The first playable interface connects 19 authored questions across two
+Steps 1–6 are complete. The responsive interface connects 19 authored questions across two
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
-back, leave, or explore another rabbit hole. Refresh starts a new visit.
+back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance
+follows the system, and answer layouts adapt to screen width and label length.
 
 ## Requirements
 
@@ -41,12 +42,13 @@ local to your computer by default.
 | `npm test`                 | Run content validation, library, and session behavior tests once        |
 | `npm run test:watch`       | Rerun tests as files change                                             |
 | `npm run test:e2e:install` | Install Playwright's headless Chromium browser                          |
-| `npm run test:e2e`         | Type-check, build, and run the browser smoke tests                      |
+| `npm run test:e2e`         | Type-check, build, and run browser journey and layout tests             |
 | `npm run check`            | Run type checks, lint, formatting, unit tests, build, and browser tests |
 
 `preview` is a local build check, not a production hosting server. Vitest runs the validator,
 library, and session behavior tests in Node. Playwright tests the production build in headless
-Chromium with desktop/light and mobile/dark configurations.
+Chromium with desktop/light and mobile/dark journey configurations, plus a responsive matrix in
+both themes from 320 to 1440 CSS pixels.
 
 Before the first browser test run, install the matching browser:
 
@@ -57,8 +59,9 @@ npm run check
 
 Repeat browser installation after a Playwright upgrade. The runner starts and stops its own preview
 server on `http://127.0.0.1:4175`; keep that port free. It does not reuse the development server.
-Failure traces and screenshots go in the ignored `test-results/` directory. See the
-[first playable version notes](docs/first-playable.md) for test coverage and remaining checks.
+Failure traces and screenshots go in the ignored `test-results/` directory. The layout matrix also
+saves full-page review images there. See the [first playable version notes](docs/first-playable.md)
+and [responsive design notes](docs/responsive-design.md) for coverage and remaining checks.
 
 ## Source layout
 
@@ -75,8 +78,9 @@ docs/              Research, implementation roadmap, and progress notes
 ```
 
 Keep questions separate from the UI, and keep traversal logic independent of React. Use CSS Modules
-for component styles and CSS custom properties for shared values. The initial readable layout is
-playable; the full responsive design is Step 6, and browser Back/Forward integration is Step 7.
+for component styles and CSS custom properties for shared values. Shared design tokens live in
+`src/styles/global.css`. The responsive interface is implemented; browser Back/Forward integration
+and screen transitions are Step 7.
 
 ## Development conventions
 
@@ -112,3 +116,4 @@ installation.
 - [Starter content review](docs/starter-content-review.md)
 - [Session engine and integration guide](docs/session-engine.md)
 - [First playable version and browser checks](docs/first-playable.md)
+- [Responsive design and layout verification](docs/responsive-design.md)

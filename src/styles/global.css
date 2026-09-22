@@ -1,17 +1,55 @@
 :root {
   color-scheme: light dark;
+
+  /* Reading-room palette: paper in daylight, charcoal after dark. */
   --color-background: light-dark(#f5f0e7, #171819);
   --color-text: light-dark(#282923, #f1ecdf);
   --color-text-muted: light-dark(#64645b, #adaea3);
   --color-control: light-dark(#fffaf1, #202222);
-  --color-border: light-dark(#b4ac9d, #56594f);
+  --color-control-hover: light-dark(#efe6d7, #2d302a);
+  --color-border: light-dark(#8b8375, #73776b);
   --color-accent: light-dark(#80501c, #dfb879);
   --color-primary: light-dark(#79501d, #dfb879);
   --color-primary-text: light-dark(#fffaf1, #24241e);
 
-  font-family: Arial, Helvetica, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-description: 1.0625rem;
+  --text-question: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  --text-welcome: clamp(2.75rem, 2rem + 3vw, 4rem);
+  --leading-body: 1.6;
+  --leading-heading: 1.2;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --reading-width: 38rem;
+  --page-gutter: clamp(1.25rem, 4vw, 2rem);
+  --page-block-space: clamp(1.5rem, 6svh, 4rem);
+  --target-answer: 3.25rem;
+  --target-primary: 3.5rem;
+  --target-secondary: 2.75rem;
+  --radius-control: 0.75rem;
+  --radius-primary: 999px;
+  --focus-width: 3px;
+  --focus-offset: 5px;
+
+  /* Reserved for the screen transitions in Step 07. */
+  --motion-duration: 180ms;
+  --motion-easing: cubic-bezier(0.2, 0, 0, 1);
+
+  font-family: var(--font-sans);
+  font-size: 100%;
   font-synthesis: none;
-  line-height: 1.5;
+  line-height: var(--leading-body);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   color: var(--color-text);
   background: var(--color-background);
 }
@@ -24,16 +62,28 @@
 
 body {
   margin: 0;
-  min-width: 320px;
 }
 
 button {
+  appearance: none;
   font: inherit;
   cursor: pointer;
   touch-action: manipulation;
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 5px;
+  outline: var(--focus-width) solid var(--color-accent);
+  outline-offset: var(--focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0ms;
+  }
+}
+
+@media (max-height: 32rem) {
+  :root {
+    --page-block-space: var(--space-6);
+  }
 }

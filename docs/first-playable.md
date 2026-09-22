@@ -2,6 +2,9 @@
 
 Step 05, 23 September 2026.
 
+These notes record the first playable milestone. Step 06 has since refined its layout and expanded
+browser coverage; see [responsive design](./responsive-design.md).
+
 The UI in `src/components/App.tsx` now uses the authored library and the existing pure session
 engine. The small interface stays in one component, with styling in its CSS Module. Content and
 traversal remain separate; no application dependency was added.

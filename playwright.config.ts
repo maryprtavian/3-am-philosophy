@@ -17,16 +17,22 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop-chromium',
+      testMatch: '**/journey.spec.ts',
       use: { viewport: { width: 1440, height: 900 }, colorScheme: 'light' },
     },
     {
       name: 'mobile-chromium',
+      testMatch: '**/journey.spec.ts',
       use: {
         viewport: { width: 390, height: 844 },
         isMobile: true,
         hasTouch: true,
         colorScheme: 'dark',
       },
+    },
+    {
+      name: 'responsive-chromium',
+      testMatch: '**/layout.spec.ts',
     },
   ],
   webServer: {

@@ -26,7 +26,11 @@ export default function App() {
     node === null ? '3 A.M. Philosophy' : node.kind === 'question' ? node.text : 'A place to pause.'
 
   return (
-    <main className={styles.page} aria-labelledby="screen-title">
+    <main
+      className={styles.page}
+      data-screen={node?.kind ?? 'welcome'}
+      aria-labelledby="screen-title"
+    >
       <div className={styles.experience}>
         {node !== null && <p className={styles.eyebrow}>3 A.M. Philosophy</p>}
         <h1

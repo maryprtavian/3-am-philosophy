@@ -1,104 +1,158 @@
 .page {
   display: grid;
-  min-height: 100svh;
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+  min-block-size: 100dvh;
   align-content: center;
   justify-items: center;
-  padding: 3rem 1.5rem;
+  padding-block-start: calc(var(--page-block-space) + env(safe-area-inset-top, 0px));
+  padding-block-end: calc(var(--page-block-space) + env(safe-area-inset-bottom, 0px));
+  padding-inline-start: calc(var(--page-gutter) + env(safe-area-inset-left, 0px));
+  padding-inline-end: calc(var(--page-gutter) + env(safe-area-inset-right, 0px));
   text-align: center;
 }
 
 .experience {
   display: grid;
   justify-items: center;
-  gap: 1.75rem;
-  width: min(100%, 38rem);
+  gap: var(--space-8);
+  inline-size: min(100%, var(--reading-width));
+  min-inline-size: 0;
 }
 
 .eyebrow {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .title {
   margin: 0;
-  max-width: 25ch;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  max-inline-size: min(100%, 25ch);
+  min-inline-size: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-question);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: var(--leading-heading);
+  letter-spacing: -0.025em;
   text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.page[data-screen='welcome'] .title {
+  font-size: var(--text-welcome);
+  letter-spacing: -0.045em;
 }
 
 .description {
   margin: 0;
-  max-width: 42ch;
+  max-inline-size: min(100%, 42ch);
   color: var(--color-text-muted);
-  font-size: 1.0625rem;
+  font-size: var(--text-description);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .note {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: var(--text-small);
 }
 
 .primaryButton,
 .answerButton {
-  min-height: 3.25rem;
-  max-width: 100%;
-  padding: 1rem 1.25rem;
+  min-block-size: var(--target-answer);
+  max-inline-size: 100%;
+  padding: var(--space-3) var(--space-6);
   border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-control);
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: var(--leading-body);
   overflow-wrap: anywhere;
 }
 
 .primaryButton {
+  min-inline-size: min(100%, 14rem);
+  min-block-size: var(--target-primary);
+  padding: var(--space-4) var(--space-8);
   color: var(--color-primary-text);
   background: var(--color-primary);
   border-color: var(--color-primary);
+  border-radius: var(--radius-primary);
 }
 
 .answers {
-  display: grid;
-  gap: 0.75rem;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  inline-size: 100%;
 }
 
 .answerButton {
-  width: 100%;
+  flex: 1 0 100%;
+  min-inline-size: 0;
   color: var(--color-text);
   background: var(--color-control);
-}
-
-.answerButton:hover {
-  border-color: var(--color-accent);
-}
-
-.primaryButton:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
 }
 
 .navigation {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.25rem 1rem;
+  gap: var(--space-1) var(--space-4);
+  max-inline-size: 100%;
+  margin-block-start: var(--space-2);
 }
 
 .quietButton {
-  min-height: 2.75rem;
-  padding: 0.5rem;
+  min-inline-size: var(--target-secondary);
+  min-block-size: var(--target-secondary);
+  max-inline-size: 100%;
+  padding: var(--space-2) var(--space-3);
   border: 0;
+  border-radius: var(--radius-control);
   background: transparent;
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: var(--text-small);
+  overflow-wrap: anywhere;
 }
 
-.quietButton:hover {
-  color: var(--color-text);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+.answerButton:active,
+.quietButton:active {
+  background: var(--color-control-hover);
+}
+
+@media (min-width: 40rem) {
+  .answerButton {
+    /* Equal halves for short labels; intrinsic text width makes longer labels wrap to full rows. */
+    flex-basis: max-content;
+    min-inline-size: calc((100% - var(--space-3)) / 2);
+  }
+}
+
+@media (hover: hover) {
+  .answerButton:hover {
+    background: var(--color-control-hover);
+    border-color: var(--color-accent);
+  }
+
+  .primaryButton:hover,
+  .quietButton:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .quietButton:hover {
+    color: var(--color-text);
+  }
+}
+
+@media (max-height: 32rem) {
+  .experience {
+    gap: var(--space-6);
+  }
 }
