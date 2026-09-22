@@ -22,6 +22,9 @@ async function expectQuestion(page: Page, text: string): Promise<void> {
   await expect(heading).toBeVisible()
   await expect(heading).toBeFocused()
   await expect(
+    page.getByRole('group', { name: 'Choose an answer' }).getByRole('button').first(),
+  ).toBeEnabled()
+  await expect(
     page.getByRole('group', { name: 'Choose an answer' }).getByRole('button'),
   ).toHaveCount(2)
 }
@@ -145,6 +148,7 @@ test('supports a keyboard journey with visible focus and a useful tab order', as
   ).toHaveAccessibleDescription(
     'The question can stay open. Sit with it a little longer, or follow another rabbit hole.',
   )
+  await expect(page.getByRole('button', { name: 'Another rabbit hole', exact: true })).toBeEnabled()
   await page.keyboard.press('Tab')
   await expect(page.getByRole('button', { name: 'Another rabbit hole', exact: true })).toBeFocused()
   await page.keyboard.press('Enter')

@@ -2,10 +2,11 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–6 are complete. The responsive interface connects 19 authored questions across two
+Steps 1–7 are complete. The responsive interface connects 19 authored questions across two
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
 back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance
-follows the system, and answer layouts adapt to screen width and label length.
+follows the system, and answer layouts adapt to screen width and label length. Browser Back/Forward
+restores screens within the visit; brief transitions respect reduced motion and guard rapid input.
 
 ## Requirements
 
@@ -61,7 +62,9 @@ Repeat browser installation after a Playwright upgrade. The runner starts and st
 server on `http://127.0.0.1:4175`; keep that port free. It does not reuse the development server.
 Failure traces and screenshots go in the ignored `test-results/` directory. The layout matrix also
 saves full-page review images there. See the [first playable version notes](docs/first-playable.md)
-and [responsive design notes](docs/responsive-design.md) for coverage and remaining checks.
+and [responsive design notes](docs/responsive-design.md) for layout coverage. The
+[navigation notes](docs/navigation-and-interaction.md) explain history, refresh, interaction tests,
+and remaining verification. There are currently 103 unit tests and 46 browser tests.
 
 ## Source layout
 
@@ -70,7 +73,7 @@ src/
   main.tsx          React entry point
   components/      React UI and colocated CSS Modules
   content/         Types, authored collections, combined library, and content tests
-  engine/          Content validator, pure session engine, and behavioral tests
+  engine/          Content validator, pure session engine, browser adapter, and tests
   styles/          Shared styles and design tokens
 public/            Static assets copied into the build
 e2e/               Playwright browser journeys against the production build
@@ -79,8 +82,9 @@ docs/              Research, implementation roadmap, and progress notes
 
 Keep questions separate from the UI, and keep traversal logic independent of React. Use CSS Modules
 for component styles and CSS custom properties for shared values. Shared design tokens live in
-`src/styles/global.css`. The responsive interface is implemented; browser Back/Forward integration
-and screen transitions are Step 7.
+`src/styles/global.css`. A document-local store connects the pure engine to browser history through
+React's `useSyncExternalStore`; answers remain in memory. Step 8 reviews the experience before
+expanding the library.
 
 ## Development conventions
 
@@ -117,3 +121,4 @@ installation.
 - [Session engine and integration guide](docs/session-engine.md)
 - [First playable version and browser checks](docs/first-playable.md)
 - [Responsive design and layout verification](docs/responsive-design.md)
+- [Browser navigation and interaction behavior](docs/navigation-and-interaction.md)

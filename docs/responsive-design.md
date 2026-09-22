@@ -2,6 +2,9 @@
 
 Step 06, 23 September 2026.
 
+These notes record Step 06 verification. Step 07 subsequently added browser history and transitions;
+see [navigation and interaction](./navigation-and-interaction.md) for current behavior and totals.
+
 The interface now implements the agreed reading-room style across narrow, wide, and short screens.
 The question remains the focus: Georgia headings, system-font controls, a charcoal/ivory dark
 appearance, warm-paper light appearance, and amber opening actions. System preference selects the
@@ -89,4 +92,4 @@ JavaScript and 1.64 kB of CSS, measured with gzip compression.
 These are browser viewport and text-resize checks. They do not reproduce physical notches, mobile
 browser chrome animations, browser zoom, or spoken screen-reader output. Real-device safe-area
 checks, Firefox/WebKit, zoom, and the full accessibility review remain scheduled for later steps.
-Step 07 next integrates browser history, transitions, and rapid-input handling.
+Step 07 has since integrated browser history, transitions, and rapid-input handling.

@@ -20,6 +20,29 @@
   min-inline-size: 0;
 }
 
+.experience[data-entering='true'] .title {
+  animation: arrive var(--motion-duration) var(--motion-easing);
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.experience button[aria-disabled='true'] {
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience[data-entering='true'] .title {
+    animation: none;
+  }
+}
+
 .eyebrow {
   margin: 0;
   color: var(--color-text-muted);

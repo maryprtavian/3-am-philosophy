@@ -17,12 +17,12 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop-chromium',
-      testMatch: '**/journey.spec.ts',
+      testMatch: ['**/journey.spec.ts', '**/navigation.spec.ts'],
       use: { viewport: { width: 1440, height: 900 }, colorScheme: 'light' },
     },
     {
       name: 'mobile-chromium',
-      testMatch: '**/journey.spec.ts',
+      testMatch: ['**/journey.spec.ts', '**/navigation.spec.ts'],
       use: {
         viewport: { width: 390, height: 844 },
         isMobile: true,

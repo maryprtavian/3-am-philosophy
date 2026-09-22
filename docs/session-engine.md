@@ -39,8 +39,8 @@ No additional randomness occurs when answering questions.
 
 State and content are readonly. Transitions return new state without changing their inputs. Keep
 state in memory; creating an initial session on a fresh page load starts a new visit. Arbitrary
-external or serialized state is not an accepted input contract. Browser-history restoration and
-stale-entry handling will be integrated in Step 07.
+external or serialized state is not an accepted input contract. Step 07 adds a separate browser
+adapter that restores only snapshots held by the current document.
 
 ## Actions and boundaries
 
@@ -56,13 +56,29 @@ stale-entry handling will be integrated in Step 07.
 
 An answer always creates a new forward route, even if it repeats an earlier answer. Only `forward`
 restores the existing route. Leaving or selecting another opening removes the previous route from
-the engine; this trail is for navigation within one rabbit hole. The later browser integration may
-manage a history of session snapshots across these actions.
+the engine; this trail is for navigation within one rabbit hole. The browser adapter manages a
+history of session snapshots across these actions.
 
 Unavailable actions return the same state object. Invalid random samples (outside `[0, 1)` or not
 finite), invalid answer indices, and answers referring to another question are also ignored. The
-question ID guard rejects a repeated event from the previous question. Full rapid-input handling,
-focus changes, and browser navigation remain Step 07.
+question ID guard rejects a repeated event from the previous question. The browser adapter and UI
+add rapid-input handling, focus changes, and native browser navigation.
+
+## Browser adapter
+
+`src/engine/browser-session.ts` owns document-local snapshots and exposes `subscribe`, `getSnapshot`,
+and `dispatch` to React through `useSyncExternalStore`. Starting, answering, leaving, and selecting
+another opening use the pure reducer and append one browser history entry. The browser's state
+contains only a visit marker and numeric reference; the answers and snapshots stay in memory.
+
+The UI's **Go back** action calls native Back. Back/Forward restores snapshots across rabbit holes
+as well as within them. For example, Back from an opening launched at a pause restores that pause;
+this is intentionally broader than the standalone reducer's `back` action in the table above.
+Restoration retains the current visit's tried-opening list. A new answer after Back discards the
+abandoned forward snapshots. Refresh starts a new visit, so older references show welcome.
+
+See [navigation and interaction](./navigation-and-interaction.md) for lifecycle, stale-entry,
+input-guard, and focus decisions.
 
 ## Entry selection and exhaustion
 
@@ -87,4 +103,5 @@ back/forward at every edge and selecting another opening at every pause.
 
 Run `npm test` for behavior checks or `npm run check` for the complete quality gate. Step 05 now
 connects the engine to the playable UI and adds browser smoke tests; see the
-[first playable version notes](./first-playable.md). Browser History API integration remains Step 07.
+[first playable version notes](./first-playable.md). Step 07 adds 18 browser navigation and interaction
+checks, bringing the browser total to 46 alongside the 103 content/engine unit tests.

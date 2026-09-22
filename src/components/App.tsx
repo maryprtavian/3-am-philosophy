@@ -1,26 +1,32 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useLayoutEffect, useRef, useSyncExternalStore } from 'react'
 import { content } from '../content/library'
-import { createInitialSession, createSessionEngine } from '../engine/session'
+import { createSessionEngine } from '../engine/session'
+import { createBrowserSession } from '../engine/browser-session'
 import styles from './App.module.css'
 
 const engine = createSessionEngine(content)
+const browserSession = createBrowserSession(engine)
 
 export default function App() {
-  const [session, dispatch] = useReducer(engine.reducer, undefined, createInitialSession)
+  const { session, revision, busy } = useSyncExternalStore(
+    browserSession.subscribe,
+    browserSession.getSnapshot,
+  )
+  const dispatch = browserSession.dispatch
   const node = engine.getCurrentNode(session)
   const isRevisit = engine.getEntryOptions(session).kind === 'revisit'
   const nextLabel = isRevisit ? 'Revisit a rabbit hole' : 'Another rabbit hole'
   const headingRef = useRef<HTMLHeadingElement>(null)
-  const screenId = node?.id ?? 'welcome'
-  const previousScreen = useRef(screenId)
+  const previousRevision = useRef(revision)
 
-  useEffect(() => {
-    if (previousScreen.current === screenId) return
-    previousScreen.current = screenId
+  useLayoutEffect(() => {
+    if (previousRevision.current === revision) return
+    previousRevision.current = revision
     // Focus announces the new heading; a live region would duplicate that announcement.
     // Keep the initial page load's natural focus, and move it only after navigation.
-    headingRef.current?.focus()
-  }, [screenId])
+    headingRef.current?.focus({ preventScroll: true })
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [revision])
 
   const title =
     node === null ? '3 A.M. Philosophy' : node.kind === 'question' ? node.text : 'A place to pause.'
@@ -30,8 +36,20 @@ export default function App() {
       className={styles.page}
       data-screen={node?.kind ?? 'welcome'}
       aria-labelledby="screen-title"
+      onClickCapture={(event) => {
+        if (busy || event.detail > 1) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+      }}
+      onKeyDownCapture={(event) => {
+        if (event.repeat && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+      }}
     >
-      <div className={styles.experience}>
+      <div key={revision} className={styles.experience} data-entering={revision > 0}>
         {node !== null && <p className={styles.eyebrow}>3 A.M. Philosophy</p>}
         <h1
           id="screen-title"
@@ -55,6 +73,7 @@ export default function App() {
             )}
             <button
               type="button"
+              aria-disabled={busy || undefined}
               className={styles.primaryButton}
               onClick={() => dispatch({ type: 'start', sample: Math.random() })}
             >
@@ -68,6 +87,7 @@ export default function App() {
               <button
                 key={`${node.id}-${choice}`}
                 type="button"
+                aria-disabled={busy || undefined}
                 className={styles.answerButton}
                 onClick={() => dispatch({ type: 'answer', questionId: node.id, choice })}
               >
@@ -87,6 +107,7 @@ export default function App() {
             )}
             <button
               type="button"
+              aria-disabled={busy || undefined}
               className={styles.primaryButton}
               onClick={() => dispatch({ type: 'another', sample: Math.random() })}
             >
@@ -99,6 +120,7 @@ export default function App() {
           <nav className={styles.navigation} aria-label="Thought navigation">
             <button
               type="button"
+              aria-disabled={busy || undefined}
               className={styles.quietButton}
               onClick={() => dispatch({ type: 'back' })}
             >
@@ -106,6 +128,7 @@ export default function App() {
             </button>
             <button
               type="button"
+              aria-disabled={busy || undefined}
               className={styles.quietButton}
               onClick={() => dispatch({ type: 'leave' })}
             >

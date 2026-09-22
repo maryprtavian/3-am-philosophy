@@ -257,3 +257,39 @@ Status: complete, 23 September 2026.
 The responsive design step is complete. Physical notch/chrome behavior, actual browser zoom,
 screen-reader output, Firefox, and WebKit remain later verification. Step 07 adds browser history,
 screen transitions, and rapid-input handling using the established session engine and motion tokens.
+
+## Step 07 — Navigation and interaction details
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Added a document-local browser adapter around the pure session engine. React observes its
+  snapshots through `useSyncExternalStore`; the existing reducer still controls authored branching.
+- Connected native Back/Forward and Go back to the same snapshot restoration. Leaving and opening
+  another rabbit hole also participate in history, while tried openings remain remembered for the visit.
+- Kept answers in memory and stored only opaque references in native history. Refresh starts a
+  fresh visit; old references become welcome screens without trapping browser navigation.
+- Added a 180 ms heading fade and an independent input guard, including repeated key and
+  multi-click handling. Reduced motion removes the animation, and native history remains usable.
+- Focused the heading once per navigation and reset the reading position for long questions.
+  Timer completion does not repeat focus; no competing live region was added.
+- Added 18 browser checks across desktop and mobile configurations and documented the behavior
+  in [navigation and interaction](./navigation-and-interaction.md). No dependencies were added.
+
+### Verification
+
+- `npm run check` passed TypeScript, ESLint, formatting, **103 unit tests**, the production build,
+  and **46 browser tests** (18 navigation/interaction, eight journey, and 20 layout checks).
+- Browser tests cover branch replacement, leaving, previous pauses, refresh/stale references,
+  exiting to the prior document, data boundaries, rapid clicks/taps, held keys, scroll restoration,
+  one heading-focus event per navigation, and reduced motion.
+- Manually verified Back/Forward and heading focus in the in-app preview, then refreshed to the
+  fresh welcome screen. The captured browser console contained no warnings or errors.
+- Production assets measure **74.20 kB gzip** of JavaScript and **1.75 kB gzip** of CSS.
+
+### Scope boundary
+
+Step 07 is complete with Chromium and emulated mobile input coverage. Focus events were verified;
+spoken screen-reader output and real-device behavior were not. These remain Step 10 checks with
+Firefox, WebKit, and browser zoom. Step 08 next reviews the experience before expanding the library.

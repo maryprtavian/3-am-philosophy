@@ -40,7 +40,6 @@
   --focus-width: 3px;
   --focus-offset: 5px;
 
-  /* Reserved for the screen transitions in Step 07. */
   --motion-duration: 180ms;
   --motion-easing: cubic-bezier(0.2, 0, 0, 1);
 
