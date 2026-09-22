@@ -2,8 +2,9 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Step 1 establishes the project foundation. The app currently renders a minimal landing screen;
-question content and branching behavior are planned for subsequent steps.
+Steps 1–2 establish the project foundation, typed content contract, and tested graph validator. The
+app currently renders a minimal landing screen; the playable question collection and branching
+behavior are planned for subsequent steps.
 
 ## Requirements
 
@@ -27,20 +28,22 @@ local to your computer by default.
 
 ## Commands
 
-| Command                | Purpose                                                            |
-| ---------------------- | ------------------------------------------------------------------ |
-| `npm run dev`          | Start the development server with hot updates                      |
-| `npm run build`        | Type-check and build the static site into `dist/`                  |
-| `npm run preview`      | Serve the production build locally; run `build` first              |
-| `npm run typecheck`    | Check the app and Vite configuration with TypeScript               |
-| `npm run lint`         | Run ESLint, treating warnings as failures                          |
-| `npm run lint:fix`     | Apply automatic lint fixes where available                         |
-| `npm run format`       | Format project files with Prettier                                 |
-| `npm run format:check` | Check formatting without changing files                            |
-| `npm run check`        | Run type checks, lint, formatting checks, and the production build |
+| Command                | Purpose                                                                   |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `npm run dev`          | Start the development server with hot updates                             |
+| `npm run build`        | Type-check and build the static site into `dist/`                         |
+| `npm run preview`      | Serve the production build locally; run `build` first                     |
+| `npm run typecheck`    | Check the app and Vite configuration with TypeScript                      |
+| `npm run lint`         | Run ESLint, treating warnings as failures                                 |
+| `npm run lint:fix`     | Apply automatic lint fixes where available                                |
+| `npm run format`       | Format project files with Prettier                                        |
+| `npm run format:check` | Check formatting without changing files                                   |
+| `npm test`             | Run the content validator tests once                                      |
+| `npm run test:watch`   | Rerun tests as files change                                               |
+| `npm run check`        | Run type checks, lint, formatting checks, tests, and the production build |
 
-`preview` is a local build check, not a production hosting server. Logic and browser tests will be
-added when their behavior is implemented, starting with content validation in Step 2.
+`preview` is a local build check, not a production hosting server. Vitest runs the validator tests
+in Node. Session behavior tests and browser tests will be added with their respective features.
 
 ## Source layout
 
@@ -48,8 +51,8 @@ added when their behavior is implemented, starting with content validation in St
 src/
   main.tsx          React entry point
   components/      React UI and colocated CSS Modules
-  content/         Reserved for typed questions and answer links (Step 2)
-  engine/          Reserved for validation and traversal logic (Steps 2–4)
+  content/         Question/pause types and a small contract example
+  engine/          Content validator and tests; traversal arrives in Step 4
   styles/          Shared styles and design tokens
 public/            Static assets copied into the build
 docs/              Research, implementation roadmap, and progress notes
@@ -89,3 +92,4 @@ installation.
 - [Design and technical direction](docs/design-and-technical-direction.md)
 - [Implementation roadmap](docs/implementation-roadmap.md)
 - [Implementation progress](docs/implementation-progress.md)
+- [Content contract and authoring guide](docs/content-authoring.md)

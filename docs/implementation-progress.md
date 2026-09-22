@@ -54,3 +54,43 @@ browser, accessibility, and physical-device checks remain scheduled for later st
 
 The landing screen confirms the toolchain works. Question types and graph validation begin in Step 02. Branching behavior, the complete interface, automated behavior tests, and deployment belong to
 their later steps.
+
+## Step 02 — Content contract and validation
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Added readonly types for the five themes, stable node IDs, answer labels and destinations,
+  questions, pauses, and a complete collection.
+- Questions require exactly two choices at the type level. Pauses are a separate node kind with no
+  choices. Nodes remain an array so duplicate IDs can be detected before indexing.
+- Added a small typed example with two distinct opening branches and a shared pause. It illustrates
+  the contract for tests and authors; the full first rabbit hole belongs to Step 03.
+- Implemented `validateContent` as a pure function accepting unknown input and returning either a
+  reconstructed, checked graph or issues containing a code, field path, and explanation.
+- Validation first checks field shapes and text, then references, then graph integrity. This avoids
+  reporting misleading reachability errors caused by malformed data or broken references.
+- Added checks for duplicate IDs and entries, missing destinations, unreachable nodes, cycles,
+  absent pauses, and questions with no path to a pause. Shared branches and multiple entry points
+  are supported.
+- Added Vitest 5.0.1, a Node test configuration, `npm test`, and `npm run test:watch`. The combined
+  `npm run check` command now runs the tests before the production build.
+- Added the authoring guide with field rules, connection rules, examples, and editorial guidance.
+  Human review remains responsible for balanced answers and meaningful follow-up questions.
+
+### Verification
+
+- All **59 validator tests passed**. They cover the valid example, merging branches, multiple entry
+  points, all themes, Unicode, input preservation, malformed fields, sparse arrays, duplicate IDs,
+  broken references, unreachable content, loops with exits, and trapped branches.
+- `npm run check` passed TypeScript, type-aware ESLint with no warnings, formatting, all tests, and
+  the production build.
+- The production bundle is unchanged because the new contract, example, and validator are not yet
+  connected to the UI. Browser checks were not repeated for this data-only step.
+
+### Scope boundary
+
+The validator is ready to check the playable collection when it is written in Step 03. That
+collection must be explicitly included in a validation test; arbitrary content exports are not
+automatically discovered. Session traversal remains Step 04, and the interactive UI remains Step 05.
