@@ -146,7 +146,7 @@ test('supports a keyboard journey with visible focus and a useful tab order', as
   await expect(
     page.getByRole('heading', { name: 'A place to pause.' }),
   ).toHaveAccessibleDescription(
-    'The question can stay open. Sit with it a little longer, or follow another rabbit hole.',
+    'Would you keep a promise made by a version of you whose memories you no longer had? The question can stay open. Sit with it a little longer, or follow another rabbit hole.',
   )
   await expect(page.getByRole('button', { name: 'Another rabbit hole', exact: true })).toBeEnabled()
   await page.keyboard.press('Tab')
@@ -181,4 +181,49 @@ test('can start with the second opening and go back from a pause and the root', 
   await expect(page.getByRole('button')).toHaveCount(1)
   await page.getByRole('button', { name: 'Another rabbit hole', exact: true }).click()
   await expectQuestion(page, immortality)
+})
+
+test('a shared pause keeps the actual last question when a branch changes or history returns', async ({
+  page,
+}) => {
+  const friendship = 'Would your copy inherit your friendships, or have to begin them again?'
+  const sharedName =
+    'If you and your copy wanted the same name, would either of you have a stronger claim?'
+  const sharedPromise =
+    'If your copy remembered making one of your promises, would they have to keep it?'
+  const invitation =
+    'Your copy can wait here too. Stay with this question, or follow another rabbit hole.'
+  const pause = page.getByRole('heading', { name: 'A place to pause.', exact: true })
+  await openVisit(page, 0.75)
+  await page.getByRole('button', { name: 'Ask me a question' }).click()
+  await choose(page, 'Someone new.', friendship)
+  await choose(page, 'They would need to build their own.', sharedName)
+  await page.getByRole('button', { name: 'We would have an equal claim.' }).click()
+  await expect(pause).toBeFocused()
+  await expect(page.getByText(sharedName, { exact: true })).toBeVisible()
+  await expect(pause).toHaveAccessibleDescription(`${sharedName} ${invitation}`)
+  await expect(page.getByRole('button')).toHaveCount(3)
+
+  await page.getByRole('button', { name: 'Go back', exact: true }).click()
+  await page.getByRole('button', { name: 'Go back', exact: true }).click()
+  await expectQuestion(page, friendship)
+  await choose(page, 'Those bonds would belong to both of us.', sharedPromise)
+  await page.getByRole('button', { name: 'They would need to agree to it themselves.' }).click()
+  await expect(pause).toBeFocused()
+  await expect(page.getByText(sharedPromise, { exact: true })).toBeVisible()
+  await expect(page.getByText(sharedName, { exact: true })).toHaveCount(0)
+  await expect(pause).toHaveAccessibleDescription(`${sharedPromise} ${invitation}`)
+
+  await page.getByRole('button', { name: 'Another rabbit hole', exact: true }).click()
+  await expectQuestion(page, immortality)
+  await expect(page.getByText(sharedPromise, { exact: true })).toHaveCount(0)
+  await page.goBack()
+  await expect(pause).toBeFocused()
+  await expect(pause).toHaveAccessibleDescription(`${sharedPromise} ${invitation}`)
+  await page.goBack()
+  await expectQuestion(page, sharedPromise)
+  await page.goForward()
+  await expect(pause).toBeFocused()
+  await expect(page.getByText(sharedPromise, { exact: true })).toBeVisible()
+  await expect(pause).toHaveAccessibleDescription(`${sharedPromise} ${invitation}`)
 })

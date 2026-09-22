@@ -293,3 +293,37 @@ Status: complete, 23 September 2026.
 Step 07 is complete with Chromium and emulated mobile input coverage. Focus events were verified;
 spoken screen-reader output and real-device behavior were not. These remain Step 10 checks with
 Firefox, WebKit, and browser zoom. Step 08 next reviews the experience before expanding the library.
+
+## Step 08 — Experience review before expansion
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Reviewed four complete browser routes across the two openings, reread all starter questions and
+  answer connections, and assessed mobile reading, desktop presentation, pacing, back/leave, and revisits.
+- Found that pauses invited reflection while hiding the final question. The pause now retains that
+  question, derived from the active trail, in a smaller serif paragraph with no additional controls.
+- Included the retained question in the pause heading's accessible description. Shared pauses and
+  restored history use the question from their own route rather than stale or duplicated text.
+- Kept the existing question wording and route lengths after review. Recorded the rationale,
+  remaining uncertainties, and content-expansion decisions in [experience review](./experience-review.md).
+- Prepared a [short tryout guide](./tryout-guide.md) with neutral prompts and observation notes for
+  future feedback. No external participant sessions were conducted.
+
+### Verification
+
+- `npm run check` passed TypeScript, ESLint, formatting, **103 unit tests**, the production build,
+  and **48 browser tests** (10 journeys, 18 navigation/interaction, and 20 layout checks).
+- The new journey verifies both routes into a shared pause, changing an earlier answer, the
+  accessible description, absence of stale text, and restoration through Back/Forward.
+- Reviewed the revised pause at 320, 390, and 1440 pixels in the in-app browser and production
+  captures in desktop/light, phone/dark, and landscape/light layouts. Existing layout checks passed
+  in both themes and with enlarged text. The in-app console had no errors or warnings.
+- Production assets measure **74.27 kB gzip** of JavaScript and **1.79 kB gzip** of CSS.
+
+### Scope boundary
+
+This is an independent walkthrough and editorial review, not evidence from first-time participants.
+External feedback is pending and the tryout material is ready. Physical devices and spoken
+screen-reader output remain later verification. Step 09 next expands and reviews the question library.

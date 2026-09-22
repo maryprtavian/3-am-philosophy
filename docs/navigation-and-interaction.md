@@ -2,6 +2,10 @@
 
 Step 07, 23 September 2026.
 
+These notes record Step 07. Step 08 subsequently kept the final question visible at pauses and
+included it in the heading's accessible description; see the [experience review](./experience-review.md)
+for that change and the updated verification totals.
+
 Browser Back/Forward and the in-app back control now restore the same screens. The interface adds
 a brief heading fade, guards rapid activation, and restores reading focus without changing the
 one-button opening or the two-answer question layout. No dependencies were added.

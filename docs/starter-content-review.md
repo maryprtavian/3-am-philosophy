@@ -2,6 +2,8 @@
 
 Reviewed on 23 September 2026 during Step 03. This records an editorial review of authored data, not
 a user tryout or browser interaction test.
+The later [Step 08 experience review](./experience-review.md) covers the playable interface and
+revisits the editorial decisions below.
 
 ## Library
 

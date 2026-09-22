@@ -79,6 +79,15 @@
   overflow-wrap: anywhere;
 }
 
+.reflection {
+  margin: 0;
+  max-inline-size: min(100%, 38ch);
+  font-family: var(--font-serif);
+  font-size: var(--text-reflection);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
 .note {
   margin: 0;
   color: var(--color-text-muted);

@@ -89,6 +89,10 @@ into longer sequences; not every choice should immediately lead to a pause.
 Wording quality and the meaning of a connection require editorial review. Validation checks the
 structure; it cannot establish that a question is thoughtful or an answer is balanced.
 
+The pause view keeps the actual preceding question visible. Write a pause invitation that fits
+every incoming branch; do not repeat a specific question in the pause text. The UI derives that
+question from the active trail so shared pauses preserve the reader's context.
+
 ## Validate a collection
 
 `validateContent` in `src/engine/validate-content.ts` accepts an unknown value and returns a

@@ -2,11 +2,12 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–7 are complete. The responsive interface connects 19 authored questions across two
+Steps 1–8 are complete. The responsive interface connects 19 authored questions across two
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
 back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance
 follows the system, and answer layouts adapt to screen width and label length. Browser Back/Forward
 restores screens within the visit; brief transitions respect reduced motion and guard rapid input.
+Pauses keep the final question visible so there is something to sit with before continuing.
 
 ## Requirements
 
@@ -64,7 +65,7 @@ Failure traces and screenshots go in the ignored `test-results/` directory. The 
 saves full-page review images there. See the [first playable version notes](docs/first-playable.md)
 and [responsive design notes](docs/responsive-design.md) for layout coverage. The
 [navigation notes](docs/navigation-and-interaction.md) explain history, refresh, interaction tests,
-and remaining verification. There are currently 103 unit tests and 46 browser tests.
+and remaining verification. There are currently 103 unit tests and 48 browser tests.
 
 ## Source layout
 
@@ -83,8 +84,8 @@ docs/              Research, implementation roadmap, and progress notes
 Keep questions separate from the UI, and keep traversal logic independent of React. Use CSS Modules
 for component styles and CSS custom properties for shared values. Shared design tokens live in
 `src/styles/global.css`. A document-local store connects the pure engine to browser history through
-React's `useSyncExternalStore`; answers remain in memory. Step 8 reviews the experience before
-expanding the library.
+React's `useSyncExternalStore`; answers remain in memory. The initial experience review is recorded
+in `docs/experience-review.md`; Step 9 expands the question library.
 
 ## Development conventions
 
@@ -122,3 +123,5 @@ installation.
 - [First playable version and browser checks](docs/first-playable.md)
 - [Responsive design and layout verification](docs/responsive-design.md)
 - [Browser navigation and interaction behavior](docs/navigation-and-interaction.md)
+- [Experience review and follow-up decisions](docs/experience-review.md)
+- [Short user tryout guide](docs/tryout-guide.md)

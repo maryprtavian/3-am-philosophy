@@ -2,8 +2,8 @@
 
 Research and proposed implementation direction — 23 September 2026.
 
-Status: research and a small interactive design concept are complete. Steps 01–07 now provide the
-responsive playable implementation with browser navigation and transitions; see the
+Status: research and a small interactive design concept are complete. Steps 01–08 now provide the
+responsive playable implementation and an initial experience review; see the
 [roadmap](./implementation-roadmap.md) for current progress.
 The project directory was empty at the initial research inspection. The decisions below record the
 original direction, including verification still scheduled for later steps.

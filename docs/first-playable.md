@@ -5,6 +5,8 @@ Step 05, 23 September 2026.
 These notes record the first playable milestone. Step 06 refined its layout and Step 07 added
 browser history and interaction details. See [responsive design](./responsive-design.md) and
 [navigation behavior](./navigation-and-interaction.md) for the current implementation.
+Step 08 then reviewed the experience and kept the final question visible at pauses; see the
+[experience review](./experience-review.md).
 
 The UI in `src/components/App.tsx` now uses the authored library and the existing pure session
 engine. The small interface stays in one component, with styling in its CSS Module. Content and

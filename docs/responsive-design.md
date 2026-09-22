@@ -4,6 +4,8 @@ Step 06, 23 September 2026.
 
 These notes record Step 06 verification. Step 07 subsequently added browser history and transitions;
 see [navigation and interaction](./navigation-and-interaction.md) for current behavior and totals.
+Step 08 added a question for reflection at pauses and rechecked the layout matrix; see the
+[experience review](./experience-review.md) for the latest change and totals.
 
 The interface now implements the agreed reading-room style across narrow, wide, and short screens.
 The question remains the focus: Georgia headings, system-font controls, a charcoal/ivory dark

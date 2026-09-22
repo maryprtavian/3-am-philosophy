@@ -14,6 +14,11 @@ export default function App() {
   )
   const dispatch = browserSession.dispatch
   const node = engine.getCurrentNode(session)
+  const previousNode =
+    node?.kind === 'pause'
+      ? engine.getCurrentNode({ ...session, cursor: session.cursor - 1 })
+      : null
+  const pausedQuestion = previousNode?.kind === 'question' ? previousNode.text : undefined
   const isRevisit = engine.getEntryOptions(session).kind === 'revisit'
   const nextLabel = isRevisit ? 'Revisit a rabbit hole' : 'Another rabbit hole'
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -56,7 +61,13 @@ export default function App() {
           ref={headingRef}
           tabIndex={-1}
           className={styles.title}
-          aria-describedby={node?.kind === 'question' ? undefined : 'screen-description'}
+          aria-describedby={
+            node?.kind === 'question'
+              ? undefined
+              : pausedQuestion
+                ? 'paused-question screen-description'
+                : 'screen-description'
+          }
         >
           {title}
         </h1>
@@ -97,6 +108,11 @@ export default function App() {
           </div>
         ) : (
           <>
+            {pausedQuestion && (
+              <p id="paused-question" className={styles.reflection}>
+                {pausedQuestion}
+              </p>
+            )}
             <p id="screen-description" className={styles.description}>
               {node.text}
             </p>
