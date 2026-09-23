@@ -4,6 +4,7 @@ Reviewed on 23 September 2026 during Step 03. This records an editorial review o
 a user tryout or browser interaction test.
 The later [Step 08 experience review](./experience-review.md) covers the playable interface and
 revisits the editorial decisions below.
+Step 09 expands to the [full library](./library-review.md); the counts below remain the Step 03 record.
 
 ## Library
 

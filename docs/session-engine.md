@@ -95,13 +95,14 @@ opening history. Only `reset` or a fresh page load clears that history.
 
 ## Verification
 
-The 38 engine tests cover actions and their boundaries, both answer choices, back/forward,
+The 42 engine tests cover actions and their boundaries, both answer choices, back/forward,
 replacement of forward history, shared pauses, leaving, resetting, deterministic entry selection,
 finite-content reporting, input preservation, and invalid content/actions. Integration cases walk
-all 26 complete answer sequences in the authored starter library through the reducer, checking
+all 90 complete answer sequences in the authored library through the reducer, checking
 back/forward at every edge and selecting another opening at every pause.
 
 Run `npm test` for behavior checks or `npm run check` for the complete quality gate. Step 05 now
 connects the engine to the playable UI and adds browser smoke tests; see the
-[first playable version notes](./first-playable.md). Step 07 adds 18 browser navigation and interaction
-checks, bringing the browser total to 46 alongside the 103 content/engine unit tests.
+[first playable version notes](./first-playable.md). With Step 09's content expansion, the quality gate
+now includes 117 content/engine unit tests and 56 browser checks; see the
+[full library review](./library-review.md).

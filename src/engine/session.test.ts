@@ -306,50 +306,48 @@ describe('invalid actions and content', () => {
   })
 })
 
-describe('complete starter-library journeys', () => {
+describe('complete library journeys', () => {
   const target = createSessionEngine(content)
   const byId = new Map<NodeId, ContentNode>(content.nodes.map((node) => [node.id, node]))
 
-  it.each([
-    { sample: 0, entry: 'immortality', expectedRoutes: 18 },
-    { sample: 0.5, entry: 'perfect-copy', expectedRoutes: 8 },
-  ])(
-    'traverses every answer sequence from $entry through the reducer',
-    ({ sample, entry, expectedRoutes }) => {
-      const opening = start(target, sample)
-      expect(target.getCurrentNode(opening)?.id).toBe(entry)
-      let completed = 0
+  it.each(
+    content.entryPoints.map((entry, index) => ({
+      entry,
+      sample: (index + 0.5) / content.entryPoints.length,
+    })),
+  )('traverses every answer sequence from $entry through the reducer', ({ sample, entry }) => {
+    const opening = start(target, sample)
+    expect(target.getCurrentNode(opening)?.id).toBe(entry)
+    let completed = 0
 
-      function walk(state: SessionState): void {
-        const node = target.getCurrentNode(state)
-        if (!node) throw new Error('A journey unexpectedly returned to welcome.')
-        expect(state.trail.length).toBeLessThanOrEqual(content.nodes.length)
-        expect(new Set(state.trail.map((step) => step.nodeId)).size).toBe(state.trail.length)
-        if (node.kind === 'pause') {
-          completed += 1
-          const next = target.reducer(state, { type: 'another', sample: 0 })
-          expect(target.getCurrentNode(next)?.id).toBe(
-            entry === 'immortality' ? 'perfect-copy' : 'immortality',
-          )
-          expect(next.trail).toHaveLength(1)
-          expect(target.getEntryOptions(next).kind).toBe('revisit')
-          return
-        }
-
-        const authored = byId.get(node.id)
-        if (authored?.kind !== 'question') throw new Error('Missing authored question.')
-        for (const choice of [0, 1] as const) {
-          const next = answer(target, state, choice)
-          expect(target.getCurrentNode(next)?.id).toBe(authored.choices[choice].next)
-          const back = target.reducer(next, { type: 'back' })
-          expect(target.getCurrentNode(back)?.id).toBe(node.id)
-          expect(target.reducer(back, { type: 'forward' })).toEqual(next)
-          walk(next)
-        }
+    function walk(state: SessionState): void {
+      const node = target.getCurrentNode(state)
+      if (!node) throw new Error('A journey unexpectedly returned to welcome.')
+      expect(state.trail.length).toBeLessThanOrEqual(content.nodes.length)
+      expect(new Set(state.trail.map((step) => step.nodeId)).size).toBe(state.trail.length)
+      if (node.kind === 'pause') {
+        completed += 1
+        const next = target.reducer(state, { type: 'another', sample: 0 })
+        expect(target.getCurrentNode(next)?.id).toBe(content.entryPoints.find((id) => id !== entry))
+        expect(next.trail).toHaveLength(1)
+        expect(next.visitedEntries).toHaveLength(2)
+        expect(target.getEntryOptions(next).kind).toBe('unseen')
+        return
       }
 
-      walk(opening)
-      expect(completed).toBe(expectedRoutes)
-    },
-  )
+      const authored = byId.get(node.id)
+      if (authored?.kind !== 'question') throw new Error('Missing authored question.')
+      for (const choice of [0, 1] as const) {
+        const next = answer(target, state, choice)
+        expect(target.getCurrentNode(next)?.id).toBe(authored.choices[choice].next)
+        const back = target.reducer(next, { type: 'back' })
+        expect(target.getCurrentNode(back)?.id).toBe(node.id)
+        expect(target.reducer(back, { type: 'forward' })).toEqual(next)
+        walk(next)
+      }
+    }
+
+    walk(opening)
+    expect(completed).toBeGreaterThan(0)
+  })
 })

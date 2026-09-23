@@ -327,3 +327,40 @@ Status: complete, 23 September 2026.
 This is an independent walkthrough and editorial review, not evidence from first-time participants.
 External feedback is pending and the tryout material is ready. Physical devices and spoken
 screen-reader output remain later verification. Step 09 next expands and reviews the question library.
+
+## Step 09 — Full question library
+
+Status: complete, 23 September 2026.
+
+### What changed
+
+- Added four authored collections: perfect dreams, borrowed time, unheard music, and words/silence.
+  The library now has **51 questions, six openings, and eight pauses** across the five themes.
+- Kept the original question wording and branches, and tagged the copy opening as identity.
+  New routes have four questions; the existing routes retain their reviewed lengths.
+- Reviewed all answer links, the twelve new shared questions, and the final alternatives leading
+  to pauses. Refined the art route's shared ending and the sole-listener answer for clearer connections.
+- Recorded the theme distribution, editorial decisions, and all **90 answer sequences** in the
+  [library review](./library-review.md) and [route inventory](./library-route-inventory.md).
+- Generalized library/engine coverage to every registered opening. Updated browser journeys for
+  six-opening exhaustion and added eight narrow-layout scenarios covering every new content node.
+- Kept content bundled locally; no dependencies, backend, or new application controls were added.
+
+### Verification
+
+- `npm run check` passed TypeScript, ESLint, formatting, **117 unit tests**, the production build,
+  and **56 browser tests** (10 journeys, 18 navigation/interaction, and 28 layout checks).
+- All 90 routes traverse the reducer, every destination resolves, all nodes are reachable, and
+  every route reaches a pause without a cycle. Every opening has distinct initial branches.
+- Browser journeys complete a representative path from each opening on desktop and mobile and
+  offer revisits only after all six openings have been tried. History preserves tried openings.
+- Every new question and pause passed 320-pixel layout checks in both themes, including clipping,
+  overlap, control size, stacking, and reachable navigation. The longest existing content remains covered.
+- Read new routes in the in-app phone preview and reviewed narrow-screen production captures.
+  External participant feedback, physical devices, and spoken screen-reader testing remain pending.
+- Production assets measure **76.77 kB gzip** of JavaScript and **1.79 kB gzip** of CSS.
+
+### Scope boundary
+
+The content expansion is complete. Step 10 next performs the broader accessibility and browser
+verification, including axe, Firefox/WebKit, and the remaining manual checks where available.

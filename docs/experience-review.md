@@ -2,6 +2,9 @@
 
 Step 08, 23 September 2026.
 
+These notes record the starter experience review. Step 09 subsequently expanded the content;
+see the [full library review](./library-review.md) for current counts and coverage.
+
 Decision: keep the current interaction and starter writing, fix the missing question at pauses,
 and proceed to content expansion in Step 09. This is an independent walkthrough and editorial
 review by the implementation agent. It is not a first-time participant study, and it cannot

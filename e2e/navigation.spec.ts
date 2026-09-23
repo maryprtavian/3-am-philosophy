@@ -71,12 +71,17 @@ test('history restores leaving and another-hole actions without forgetting tried
   await choose(page, 'Another me.')
   await choose(page, 'One private moment would be enough.')
   await choose(page, 'The person who had it first.', 'A place to pause.')
-  await choose(page, 'Revisit a rabbit hole', rootQuestion)
+  const dream = 'Would you stay in a perfect dream if waking meant an ordinary life?'
+  const hour = 'Would you borrow an hour from your future to make tonight last longer?'
+  await choose(page, 'Another rabbit hole', dream)
   // At a new opening, Back returns to the screen that launched it, including a previous pause.
   await choose(page, 'Go back', 'A place to pause.')
-  await expect(page.getByRole('button', { name: 'Revisit a rabbit hole' })).toBeVisible()
+  // The dream opening stays tried after Back, so the next unseen opening is the borrowed hour.
+  await choose(page, 'Another rabbit hole', hour)
+  await page.goBack()
+  await ready(page, 'A place to pause.')
   await page.goForward()
-  await ready(page, rootQuestion)
+  await ready(page, hour)
 })
 
 test('refresh invalidates old references and browser Back can still leave the app', async ({

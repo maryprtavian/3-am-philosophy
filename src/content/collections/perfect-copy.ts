@@ -1,4 +1,4 @@
-import type { ContentGraph } from '../types'
+import type { ContentGraph } from '../types.ts'
 
 export const perfectCopyContent = {
   entryPoints: ['perfect-copy'],
@@ -6,7 +6,7 @@ export const perfectCopyContent = {
     {
       kind: 'question',
       id: 'perfect-copy',
-      theme: 'reality',
+      theme: 'identity',
       text: 'Would a perfect copy of you be another you, or someone new?',
       choices: [
         { label: 'Another me.', next: 'first-difference' },

@@ -1,4 +1,4 @@
-import type { ContentGraph } from '../types'
+import type { ContentGraph } from '../types.ts'
 
 export const immortalityContent = {
   entryPoints: ['immortality'],

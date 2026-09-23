@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { content } from '../src/content/library.ts'
+import { expandedJourneys } from './content-cases.ts'
 
 const immortality = 'Would immortality eventually make everything meaningless?'
 const perfectCopy = 'Would a perfect copy of you be another you, or someone new?'
@@ -7,11 +9,16 @@ const fleeting = 'Does a moment matter because it ends, or because you were ther
 const anotherCentury =
   'If you had to forget a century to live another, would you still choose forever?'
 
-async function openVisit(page: Page, sample = 0): Promise<void> {
+async function openVisit(page: Page, entry = 'immortality'): Promise<void> {
+  const index = content.entryPoints.findIndex((id) => id === entry)
+  if (index < 0) throw new Error(`Unknown opening: ${entry}`)
   // Control entry selection in the isolated test context, without adding hooks to the app.
-  await page.addInitScript((value) => {
-    Math.random = () => value
-  }, sample)
+  await page.addInitScript(
+    (value) => {
+      Math.random = () => value
+    },
+    (index + 0.5) / content.entryPoints.length,
+  )
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('3 A.M. Philosophy')
   await expect(page.getByRole('button')).toHaveCount(1)
@@ -34,9 +41,7 @@ async function choose(page: Page, label: string, next: string): Promise<void> {
   await expectQuestion(page, next)
 }
 
-test('completes both rabbit holes, reports revisits, and leaves with one opening control', async ({
-  page,
-}) => {
+test('completes all six rabbit holes before offering revisits', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
   page.on('console', (message) => {
@@ -80,6 +85,16 @@ test('completes both rabbit holes, reports revisits, and leaves with one opening
   )
   await page.getByRole('button', { name: 'The person who had it first.' }).click()
   await expect(page.getByRole('heading', { name: 'A place to pause.' })).toBeFocused()
+  for (const route of expandedJourneys) {
+    await expect(page.getByText('You’ve tried every opening.', { exact: false })).toHaveCount(0)
+    await page.getByRole('button', { name: 'Another rabbit hole', exact: true }).click()
+    await expectQuestion(page, route.opening)
+    for (const answer of route.answers) {
+      await page.getByRole('button', { name: answer, exact: true }).click()
+    }
+    await expect(page.getByRole('heading', { name: 'A place to pause.' })).toBeFocused()
+    await expect(page.getByText(route.lastQuestion, { exact: true })).toBeVisible()
+  }
   await expect(page.getByText('You’ve tried every opening.', { exact: false })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Another rabbit hole', exact: true })).toHaveCount(
     0,
@@ -158,9 +173,12 @@ test('supports a keyboard journey with visible focus and a useful tab order', as
 test('can start with the second opening and go back from a pause and the root', async ({
   page,
 }) => {
-  await openVisit(page, 0.75)
+  await openVisit(page, 'perfect-copy')
   await page.getByRole('button', { name: 'Ask me a question' }).click()
   await expectQuestion(page, perfectCopy)
+  await page.evaluate(() => {
+    Math.random = () => 0
+  })
   await choose(
     page,
     'Someone new.',
@@ -194,8 +212,12 @@ test('a shared pause keeps the actual last question when a branch changes or his
   const invitation =
     'Your copy can wait here too. Stay with this question, or follow another rabbit hole.'
   const pause = page.getByRole('heading', { name: 'A place to pause.', exact: true })
-  await openVisit(page, 0.75)
+  await openVisit(page, 'perfect-copy')
   await page.getByRole('button', { name: 'Ask me a question' }).click()
+  await expectQuestion(page, perfectCopy)
+  await page.evaluate(() => {
+    Math.random = () => 0
+  })
   await choose(page, 'Someone new.', friendship)
   await choose(page, 'They would need to build their own.', sharedName)
   await page.getByRole('button', { name: 'We would have an equal claim.' }).click()

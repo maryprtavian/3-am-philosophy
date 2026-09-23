@@ -4,6 +4,8 @@ Step 2 defines how a collection is written and checked. The small collection in
 `src/content/example.ts` demonstrates the contract and is kept separate from the playable data.
 Step 3 adds the authored library in `src/content/library.ts`, combining the immortality and perfect
 copy collections from `src/content/collections/`.
+Step 9 extends this registry to six collections and 51 questions; see the
+[full library review](./library-review.md) and [route inventory](./library-route-inventory.md).
 
 ## Structure
 
@@ -127,6 +129,12 @@ README if the global launcher fails.
 checks that choices branch before reaching a pause. Add future collections to `src/content/library.ts`
 so they are included in that check. Adding an unrelated export alone does not register it for
 validation. The validator tests separately retain the minimal `exampleContent` fixture.
+
+Library and engine tests enumerate every registered opening automatically. New v1 routes must
+contain 4–8 questions; the existing copy route is the documented shorter exception. The library
+also checks the 40–60 question budget, all five themes, and duplicate question text. Update the
+editorial route inventory when links change. Browser smoke routes live in `e2e/content-cases.ts`;
+its narrow-layout coverage verifies that all nodes in those collections have been visited.
 
 See [starter content review](./starter-content-review.md) for the first library's route inventory,
 editorial decisions, and long-content case for later layout checks.

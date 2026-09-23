@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test'
 import type { Page, TestInfo } from '@playwright/test'
+import { content } from '../src/content/library.ts'
+import type { ContentNode } from '../src/content/types.ts'
+import { expandedJourneys } from './content-cases.ts'
 
 const sizes = [
   { width: 320, height: 568 },
@@ -11,10 +14,10 @@ const sizes = [
   { width: 1280, height: 480 },
 ]
 
-async function openVisit(page: Page): Promise<void> {
-  await page.addInitScript(() => {
-    Math.random = () => 0
-  })
+async function openVisit(page: Page, sample = 0): Promise<void> {
+  await page.addInitScript((value) => {
+    Math.random = () => value
+  }, sample)
   await page.goto('/')
   await expect(page.getByRole('button', { name: 'Ask me a question' })).toBeVisible()
 }
@@ -133,6 +136,61 @@ async function capture(page: Page, info: TestInfo, name: string): Promise<void> 
 for (const colorScheme of ['light', 'dark'] as const) {
   test.describe(colorScheme, () => {
     test.use({ colorScheme })
+
+    for (const collection of expandedJourneys) {
+      test(`${collection.entry}: every question and pause fits at 320 pixels`, async ({
+        page,
+      }, info) => {
+        const byId = new Map<string, ContentNode>(content.nodes.map((node) => [node.id, node]))
+        const reachable = new Set<string>()
+        function collect(id: string): void {
+          if (reachable.has(id)) return
+          reachable.add(id)
+          const node = byId.get(id)
+          if (!node) throw new Error(`Missing content: ${id}`)
+          if (node.kind === 'question') node.choices.forEach((choice) => collect(choice.next))
+        }
+        collect(collection.entry)
+        const seen = new Set<string>()
+        const entryIndex = content.entryPoints.findIndex((id) => id === collection.entry)
+        if (entryIndex < 0) throw new Error(`Missing opening: ${collection.entry}`)
+        await page.setViewportSize({ width: 320, height: 568 })
+        await openVisit(page, (entryIndex + 0.5) / content.entryPoints.length)
+
+        // These three paths cover every distinct node in each new collection.
+        // The final set assertion catches coverage gaps when an author changes its branches.
+        const paths = [
+          [0, 0, 0, 0],
+          [0, 1, 1, 0],
+          [1, 1, 1, 1],
+        ] as const
+        for (const [index, path] of paths.entries()) {
+          if (index > 0) await page.reload()
+          await page.getByRole('button', { name: 'Ask me a question' }).click()
+          let id: string = collection.entry
+          for (const choice of path) {
+            const node = byId.get(id)
+            if (node?.kind !== 'question') throw new Error(`Expected a question at ${id}`)
+            await expect(page.getByRole('heading', { level: 1 })).toHaveText(node.text)
+            seen.add(id)
+            await checkLayout(page)
+            await checkAnswers(page, true)
+            await page
+              .getByRole('button', { name: node.choices[choice].label, exact: true })
+              .click()
+            id = node.choices[choice].next
+          }
+          expect(byId.get(id)?.kind).toBe('pause')
+          seen.add(id)
+          await expect(page.getByRole('heading', { name: 'A place to pause.' })).toBeVisible()
+          await checkLayout(page)
+          if (index === 0) await capture(page, info, 'pause')
+          await page.getByRole('button', { name: 'Leave this thought' }).click()
+          await expect(page.getByRole('button')).toHaveCount(1)
+        }
+        expect([...seen].sort()).toEqual([...reachable].sort())
+      })
+    }
 
     for (const size of sizes) {
       test(`${size.width}x${size.height}: welcome, short/long questions, pause`, async ({
