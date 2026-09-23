@@ -16,6 +16,17 @@ test('serves the page metadata, favicon, and sharing image', async ({ page, requ
     'content',
     'summary_large_image',
   )
+  const canonical = await page.locator('link[rel="canonical"]').getAttribute('href')
+  expect(canonical).toMatch(/^https:\/\//)
+  const site = new URL(canonical!)
+  expect(site.pathname).toBe('/')
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', site.href)
+  for (const selector of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+    await expect(page.locator(selector)).toHaveAttribute(
+      'content',
+      new URL('social-card.png', site).href,
+    )
+  }
   const favicon = await request.get('/favicon.svg')
   expect(favicon.ok()).toBe(true)
   expect(favicon.headers()['content-type']).toContain('image/svg+xml')

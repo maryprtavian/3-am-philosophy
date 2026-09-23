@@ -4,9 +4,12 @@ import { defineConfig, loadEnv } from 'vite'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  // The dashboard supplies CF_PAGES_URL for Git builds. Direct Upload builds can
-  // set SITE_URL after the first deployment assigns an address.
-  const address = env.SITE_URL || env.CF_PAGES_URL
+  // Workers does not supply CF_PAGES_URL. Use the confirmed stable site address
+  // for production builds; explicit SITE_URL still supports a future domain change.
+  const address =
+    env.SITE_URL ||
+    env.CF_PAGES_URL ||
+    (mode === 'production' ? 'https://3-am-philosophy.maryprtavian.workers.dev/' : undefined)
   let siteUrl: string | undefined
   if (address) {
     const parsed = new URL(address)
