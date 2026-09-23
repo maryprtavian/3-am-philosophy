@@ -1,7 +1,8 @@
 # Repository checks and releases
 
 Repository: [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy).
-Production branch: `main`. This is a public repository; the website itself is not deployed yet.
+Production branch: `main`. This is a public repository. The live site is
+[3 A.M. Philosophy](https://3-am-philosophy.maryprtavian.workers.dev/), hosted on Workers Static Assets.
 
 ## Reproduce the checks
 
@@ -47,7 +48,7 @@ Firefox, WebKit, axe, physical devices, and spoken screen-reader verification re
 3. Before merging a pull request, confirm the check named **Typecheck, lint, tests, and build**
    passes. Repository branch protection is not configured by this change; CI reports failures
    but does not itself prevent direct pushes or merges.
-4. Connect Cloudflare Pages using the [free deployment guide](./free-deployment.md). GitHub CI
+4. Follow the connected Cloudflare Workers setup in the [free deployment guide](./free-deployment.md). GitHub CI
    and Cloudflare's Git builds run independently: Cloudflare does not automatically wait for CI.
    Merge reviewed, passing pull requests into `main`; check both systems after a release.
 5. Record the release commit and hosted URL, smoke-test the deployment on desktop and a phone,

@@ -2,7 +2,7 @@
 
 The 3 A.M. Philosophy Button
 
-Status: Steps 01–09 and 11–12 are complete. The project is pushed to GitHub and CI passed on a clean Linux runner. Step 10 is deferred at the user's request while manual testing continues. Hosting and launch remain; no hosted deployment exists yet.
+Status: Steps 01–09 and 11–13 are complete, with the hosted smoke-test scope recorded. The site is live on Cloudflare Workers Static Assets. Step 10 remains deferred while manual testing continues; final launch review remains open.
 
 This roadmap implements the decisions in [Design and technical direction](./design-and-technical-direction.md). Work through the steps in order. Each step should leave a working, reviewable result. Keep code changes focused, and add relevant tests alongside behavior rather than postponing all testing until the end.
 
@@ -221,9 +221,14 @@ is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosoph
 
 ## 13 — Deploy and verify the preview
 
+The user connected GitHub and supplied the live Workers address on 23 September 2026. Workers
+Static Assets replaces the originally planned Pages service. Hosted journeys, assets, and final
+sharing metadata were verified; the same production assets passed both-appearance CI checks.
+See [hosted verification](./hosted-verification.md) for the exact scope and manual checks still pending.
+
 **Work**
 
-- Connect the repository to Cloudflare Pages using the intended account when available.
+- Connect the repository to Cloudflare static hosting using the intended account when available.
 - Configure the build command and generated output directory, HTTPS, and appropriate static asset caching.
 - Deploy a preview from the release candidate.
 - Run the essential journeys against the hosted build, including refresh, Back/Forward, both appearances, mobile layout, and asset loading.
@@ -260,7 +265,7 @@ is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosoph
 
 ## Execution notes
 
-- Research and Steps 01–09 and 11–12 are complete. Step 13 connects hosting; Step 10 remains deferred.
+- Research and Steps 01–09 and 11–13 are complete. Step 10 and the final launch review remain open.
 - Keep code, content, and related tests together in reviewable changes. Use milestone reviews after steps 05, 07, 13, and 14.
 - Content editing can progress alongside independent UI work once the content contract is stable; the overall acceptance sequence remains the same.
 - External inputs may be needed for feedback participants, physical test devices, repository access, hosting access, and an optional custom domain. Record unavailable inputs honestly and continue work that does not depend on them.

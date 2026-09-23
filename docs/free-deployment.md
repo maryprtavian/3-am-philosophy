@@ -1,111 +1,54 @@
 # Free deployment
 
-Decision, checked 23 September 2026: use **Cloudflare Pages Free** with Git integration and its supplied
-`pages.dev` address. The app is entirely static. It needs no paid domain, database, server,
-Functions, AI service, or account system. Cloudflare currently advertises free signup without
-a credit card and unlimited static requests/bandwidth. Keep the account on the free plan.
-See [Cloudflare Pages](https://www.cloudflare.com/products/pages/).
+Live site: **https://3-am-philosophy.maryprtavian.workers.dev/**.
 
-## What is ready
+The user connected GitHub and deployed with **Cloudflare Workers Static Assets**, rather than the
+originally proposed Pages service. This is a suitable host for the existing static React/Vite app.
+There is no need to migrate or purchase a domain. Cloudflare documents static asset requests as
+free and unlimited, with no extra asset storage charge; Worker-script execution has separate
+limits/pricing. Keep the account on the Free plan and this app as static assets.
+[Static asset billing](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/).
 
-- `npm run build` generates the complete site in `dist/` and enforces the asset budget.
-- The initial upload ZIP is `artifacts/3-am-philosophy.zip`. Its root contains `index.html`,
-  `assets/`, the favicon, and the social image. Only these public build files belong in the upload.
-- A [production report](./production-readiness.md) records the checks and remaining verification.
-- The selected GitHub repository is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy).
-  Use the Git route below for automatic updates. No site has been published or Cloudflare project connected yet.
+## Address and updates
 
-## Alternative: dashboard upload
+- Share the stable URL above. The earlier `4d801d99-3-am-philosophy.maryprtavian.workers.dev`
+  address identifies one version and does not follow future production deployments.
+  See [version URLs](https://developers.cloudflare.com/workers/versions-and-deployments/version-urls/).
+- Repository: [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy), branch `main`.
+- `npm run build` creates `dist/` and checks the asset budget. The current site serves those assets.
+- The user confirmed GitHub is connected. Workers build settings are under **Settings → Build**;
+  build and deploy commands are separate. Preserve the working asset deployment configuration.
+  The expected build command is `npm run build` and generated asset directory is `dist`.
+  See [Workers build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+- GitHub CI and Cloudflare builds run independently. Review passing pull requests before merging,
+  then check the new hosted version. See the [release guide](./releasing.md).
 
-The selected route is Git integration. Keep the ZIP as an optional manual-upload alternative.
+## Sharing metadata
 
-1. Create or sign into your free [Cloudflare account](https://dash.cloudflare.com/sign-up).
-2. Open **Workers & Pages → Create application** and choose **Pages / Direct Upload**
-   (the dashboard may label this **Drag and drop files**).
-3. Choose a project name, for example `3-am-philosophy`, subject to availability.
-4. Upload `artifacts/3-am-philosophy.zip` or the **built `dist` folder**. Do not upload the
-   repository, `src`, `node_modules`, or environment files. Select **Deploy site**.
-5. Copy the assigned HTTPS `pages.dev` address and share it in this task. This is public hosting.
-6. We will set that address as `SITE_URL`, rebuild and replace the upload, and check the hosted
-   journeys and sharing metadata. Continue the remaining Step 10 checks before calling it launched.
+Production builds default to the confirmed stable Workers address in `vite.config.ts`. They emit
+an absolute canonical URL, `og:url`, and PNG sharing-image URLs. Local development omits that
+production default. A future custom domain can override it with the public build variable `SITE_URL`.
 
-Cloudflare assigns the subdomain and may adjust an unavailable name. The dashboard accepts ZIPs
-and folders, with a 1,000-file limit and 25 MiB per file. This build has seven files and is well
-below those limits. See [Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/).
+`SITE_URL` must be an HTTPS origin with no path, query, fragment, or credentials. Set it as a **build**
+variable, not only a runtime variable, and rebuild. No secret or paid integration is required.
+The older `CF_PAGES_URL` fallback remains for compatibility with Pages builds.
 
-**Tradeoff:** this route uses manual uploads for updates. Cloudflare does not let an existing
-Direct Upload project switch to Git integration; moving to automatic Git builds requires a new
-Pages project. If automatic deployment on every push is the priority, use the Git route below
-from the beginning. Both routes can use the free plan.
+## Hosted checks and rollback
 
-## Git deployment for automatic updates
+Verify a complete journey, another opening, backtracking, browser Back/Forward, and refresh at the
+stable address. Check the favicon, scripts, styles, and social image load successfully. Confirm the
+HTML contains the stable canonical/image URLs, rather than a version URL. See
+[hosted verification](./hosted-verification.md) for the actual results and remaining checks.
 
-This follows Steps 12–13 of the original roadmap. The project is pushed to the public repository
-[maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy), and the
-[first CI run passed](https://github.com/maryprtavian/3-am-philosophy/actions/runs/35872452751).
-To connect hosting:
+To roll back, open **Workers & Pages → 3-am-philosophy → Deployments**, select a previous successful
+version, and use **Rollback**. Confirm the stable URL afterward. A rollback does not revert Git;
+fix or revert the source before the next push so an automatic build does not restore the defect.
+[Cloudflare rollback documentation](https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/).
 
-1. Sign into your free Cloudflare account and open **Workers & Pages → Create application → Pages**.
-2. Choose **Import an existing Git repository / Connect to Git** and authorize access to this repository.
-3. Select `maryprtavian/3-am-philosophy` and enter the build settings below.
-4. Deploy using the free `pages.dev` address and share the assigned URL in this task for hosted verification.
+The local `artifacts/3-am-philosophy.zip` is an optional manual-upload artifact from Step 11; it is
+not the source for Git deployments and may be older than the latest commit. Rebuild before making
+a new ZIP. `dist/`, ZIPs, and local environment files stay out of Git.
 
-| Setting                      | Value                                  |
-| ---------------------------- | -------------------------------------- |
-| Production branch            | `main`                                 |
-| Root directory               | Repository root                        |
-| Build command                | `npm run build`                        |
-| Build output directory       | `dist`                                 |
-| Node                         | 22, selected by the committed `.nvmrc` |
-| Runtime, Functions, bindings | None                                   |
-| Domain                       | The assigned free `pages.dev` address  |
-
-The lockfile controls dependency versions. Run `npm run check` before pushing a release; the
-host's build command checks types, builds, and checks bundle size but does not run browser tests.
-Repository CI is configured in `.github/workflows/ci.yml`; see the [release guide](./releasing.md).
-Cloudflare's Git build runs independently of GitHub CI, so only merge reviewed changes with passing checks.
-The build reads Cloudflare's `CF_PAGES_URL` for absolute metadata when
-`SITE_URL` is unset; set `SITE_URL` to the final production origin when ready to share that address.
-Cloudflare's free plan currently includes 500 builds/month. See the
-[Vite setup](https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite3-project/) and
-[Pages limits](https://developers.cloudflare.com/pages/platform/limits/).
-
-## Set the final sharing URL
-
-For local builds, create an ignored `.env.local` with the assigned origin:
-
-```dotenv
-SITE_URL=https://YOUR-ASSIGNED-NAME.pages.dev
-```
-
-Replace the example with the actual address. Use the site origin only, without a path, query, or
-fragment. `npm run build` then writes an absolute canonical URL, `og:url`, and PNG image URLs
-into the static HTML. This setting is public metadata, not a secret. Until the address is known,
-the build deliberately omits these URL-dependent tags instead of publishing a guessed address.
-
-Run the checks and build, then package the **new** output. In PowerShell from the project root:
-
-```powershell
-npm run check
-New-Item -ItemType Directory -Force -Path artifacts | Out-Null
-Compress-Archive -Path dist/* -DestinationPath artifacts/3-am-philosophy.zip -Force
-```
-
-On this machine, use the [documented npm launcher workaround](../README.md#windows-npm-launcher-troubleshooting)
-if the ordinary npm command fails. macOS/Linux users can upload the `dist` folder directly.
-`artifacts/` and `dist/` are generated output and are not committed to Git.
-
-## Check the hosted preview and update it
-
-- Open the assigned HTTPS address on desktop and a real phone; check light/dark appearance,
-  one complete rabbit hole, backtracking, another opening, browser Back/Forward, and refresh.
-- Confirm refresh starts a fresh visit and assets load without console errors.
-- Check the page source for the actual canonical and social-image URLs and open the image URL.
-  Sharing services may cache their previews after an upload.
-- For Direct Upload updates, use **Create a new deployment** on the same project and upload the
-  newly built ZIP. Keep the previous successful ZIP until the new version is verified.
-- Pages supports rolling back to an earlier successful production deployment; a previous ZIP can
-  also be deployed again. See [rollbacks](https://developers.cloudflare.com/pages/configuration/rollbacks/).
-
-The Cloudflare account connection, hosting address, and hosted smoke-test results remain pending. Prices and
-limits above describe the current free plan, not a guarantee about future provider policies.
+The broader Step 10 audit, real-device testing, and final launch review remain open. Public HTTP
+checks cannot verify the account's subscription or dashboard build settings; no paid setting has
+been changed by the agent.

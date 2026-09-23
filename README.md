@@ -2,7 +2,9 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–9 and 11–12 are complete; the broader Step 10 audit is deferred while manual testing continues.
+Live: [3 A.M. Philosophy](https://3-am-philosophy.maryprtavian.workers.dev/).
+
+Steps 1–9 and 11–13 are complete; the broader Step 10 audit is deferred while manual testing continues.
 The project is pushed to GitHub, and its first clean Linux CI run passed.
 The responsive interface connects 51 authored questions across six
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
@@ -74,10 +76,10 @@ and remaining verification. There are currently 117 unit tests and 70 browser te
 
 ## Free hosting
 
-Use Cloudflare Pages Free and the supplied `pages.dev` address. No backend or paid domain is needed.
-The [deployment guide](docs/free-deployment.md) explains dashboard upload and optional Git integration,
-including the tradeoff between them. The [production report](docs/production-readiness.md) records
-the asset budget, recovery behavior, and throttled mobile measurements. The site is not deployed yet.
+The app is hosted with Cloudflare Workers Static Assets on its supplied `workers.dev` address.
+No backend or paid domain is needed. The [deployment guide](docs/free-deployment.md) describes the
+connected Git workflow, sharing metadata, and rollback. The [production report](docs/production-readiness.md)
+records the build measurements; [hosted verification](docs/hosted-verification.md) records live checks.
 
 ## Repository and CI
 

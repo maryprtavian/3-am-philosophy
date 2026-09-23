@@ -431,3 +431,27 @@ The repository was verified empty and public before the first push.
 - The result-recording commit changes documentation only and skips a redundant CI run. Application
   code, dependencies, configuration, and the workflow match the verified commit.
 - Cloudflare account authorization, the hosted address, and hosted smoke checks remain Step 13.
+
+## Step 13 — Hosted app and final sharing metadata
+
+Status: complete within the recorded hosted smoke-test scope, 23 September 2026. The broader
+Step 10 audit and final launch review remain open.
+
+- The user connected GitHub to Cloudflare Workers Static Assets and supplied both a version URL
+  and the stable production URL: **https://3-am-philosophy.maryprtavian.workers.dev/**.
+- Workers static hosting replaces the original Pages plan and supports free static requests.
+  No paid domain, service, or subscription setting was enabled by the agent.
+- Added the stable production origin as the build default because Workers does not supply
+  `CF_PAGES_URL`. Explicit `SITE_URL` overrides remain available for a future address change.
+- Pushed application commit `1d0790013cb2305a7f3e313c30409f4ae0c28d05`; the connected deployment
+  published the correct absolute canonical and social-image URLs, verified in HTTP HTML and DOM.
+- [CI run 35875198564](https://github.com/maryprtavian/3-am-philosophy/actions/runs/35875198564)
+  passed TypeScript, lint, formatting, 117 unit tests, build/budget, and 70 browser scenarios.
+- Walked a full hosted route, pause, another opening, backtracking, alternate answers, browser
+  Back/Forward, leaving, and refresh. Checked 320/390/1440 viewport widths, asset status/MIME types,
+  cache headers, and the absence of browser console warnings/errors. Viewport overrides were reset.
+- Updated the hosting/release instructions for Workers, including version versus stable URLs and
+  the documented rollback procedure. See [hosted verification](./hosted-verification.md) for limits:
+  the hosted walkthrough used dark appearance; both appearances passed production-build CI.
+
+This is not a claim of physical-device or spoken screen-reader testing. Those remain in Step 10.
