@@ -3,6 +3,7 @@
 One button, strange philosophical questions, and branching rabbit holes.
 
 Steps 1–9 and 11 are complete; the broader Step 10 audit is deferred while manual testing continues.
+Step 12 adds GitHub CI; its first remote run is being verified.
 The responsive interface connects 51 authored questions across six
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
 back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance
@@ -78,6 +79,14 @@ The [deployment guide](docs/free-deployment.md) explains dashboard upload and op
 including the tradeoff between them. The [production report](docs/production-readiness.md) records
 the asset budget, recovery behavior, and throttled mobile measurements. The site is not deployed yet.
 
+## Repository and CI
+
+The repository is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy).
+[GitHub Actions](https://github.com/maryprtavian/3-am-philosophy/actions/workflows/ci.yml) installs
+from the lockfile and runs `npm run check` on pushes and pull requests to `main`, using a free
+standard Linux runner for this public repository. The [release guide](docs/releasing.md) covers
+clean setup, adding content, interpreting CI, and deploying a reviewed change.
+
 ## Source layout
 
 ```text
@@ -142,3 +151,4 @@ installation.
 - [Complete route inventory](docs/library-route-inventory.md)
 - [Production readiness and measurements](docs/production-readiness.md)
 - [Free deployment guide](docs/free-deployment.md)
+- [Repository checks and release workflow](docs/releasing.md)

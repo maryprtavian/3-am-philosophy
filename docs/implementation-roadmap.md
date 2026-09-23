@@ -2,7 +2,7 @@
 
 The 3 A.M. Philosophy Button
 
-Status: Steps 01–09 and 11 are complete. Step 10 is deferred at the user's request while manual testing continues. Steps 12–14 remain; no hosted deployment exists yet. Research and the exploratory UI concept are complete.
+Status: Steps 01–09 and 11 are complete. Step 12 is being verified against the supplied GitHub repository. Step 10 is deferred at the user's request while manual testing continues. Hosting and launch remain; no hosted deployment exists yet.
 
 This roadmap implements the decisions in [Design and technical direction](./design-and-technical-direction.md). Work through the steps in order. Each step should leave a working, reviewable result. Keep code changes focused, and add relevant tests alongside behavior rather than postponing all testing until the end.
 
@@ -205,6 +205,10 @@ address as planned. Deployment and hosted verification remain Step 13.
 
 ## 12 — Complete repository and release automation
 
+Implemented on 23 September 2026; first remote verification is pending. The selected repository
+is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy). See the
+[release guide](./releasing.md) for CI, clean setup, and the release procedure.
+
 **Work**
 
 - Ensure all appropriate checks are runnable locally through documented npm scripts; add these scripts as their tools are introduced in earlier steps.
@@ -256,7 +260,7 @@ address as planned. Deployment and hosted verification remain Step 13.
 
 ## Execution notes
 
-- Research and Steps 01–09 are complete. Step 10 is the next implementation step.
+- Research and Steps 01–09 and 11 are complete. Step 12 verification is in progress; Step 10 remains deferred.
 - Keep code, content, and related tests together in reviewable changes. Use milestone reviews after steps 05, 07, 13, and 14.
 - Content editing can progress alongside independent UI work once the content contract is stable; the overall acceptance sequence remains the same.
 - External inputs may be needed for feedback participants, physical test devices, repository access, hosting access, and an optional custom domain. Record unavailable inputs honestly and continue work that does not depend on them.

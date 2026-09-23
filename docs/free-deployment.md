@@ -1,6 +1,6 @@
 # Free deployment
 
-Decision, checked 23 September 2026: use **Cloudflare Pages Free** with its supplied
+Decision, checked 23 September 2026: use **Cloudflare Pages Free** with Git integration and its supplied
 `pages.dev` address. The app is entirely static. It needs no paid domain, database, server,
 Functions, AI service, or account system. Cloudflare currently advertises free signup without
 a credit card and unlimited static requests/bandwidth. Keep the account on the free plan.
@@ -12,9 +12,12 @@ See [Cloudflare Pages](https://www.cloudflare.com/products/pages/).
 - The initial upload ZIP is `artifacts/3-am-philosophy.zip`. Its root contains `index.html`,
   `assets/`, the favicon, and the social image. Only these public build files belong in the upload.
 - A [production report](./production-readiness.md) records the checks and remaining verification.
-- No site has been published and no Cloudflare or GitHub account has been connected yet.
+- The selected GitHub repository is [maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy).
+  Use the Git route below for automatic updates. No site has been published or Cloudflare project connected yet.
 
-## Simplest first deployment: dashboard upload
+## Alternative: dashboard upload
+
+The selected route is Git integration. Keep the ZIP as an optional manual-upload alternative.
 
 1. Create or sign into your free [Cloudflare account](https://dash.cloudflare.com/sign-up).
 2. Open **Workers & Pages → Create application** and choose **Pages / Direct Upload**
@@ -37,9 +40,14 @@ from the beginning. Both routes can use the free plan.
 
 ## Git deployment for automatic updates
 
-This follows Steps 12–13 of the original roadmap. Create a GitHub repository and provide its URL;
-then the checked-in project can be pushed and connected to a new **Git-integrated Pages project**.
-No remote repository is configured locally yet.
+This follows Steps 12–13 of the original roadmap. The user supplied
+[maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy), an empty public
+repository, for the initial push and CI setup. Once the first check passes:
+
+1. Sign into your free Cloudflare account and open **Workers & Pages → Create application → Pages**.
+2. Choose **Import an existing Git repository / Connect to Git** and authorize access to this repository.
+3. Select `maryprtavian/3-am-philosophy` and enter the build settings below.
+4. Deploy using the free `pages.dev` address and share the assigned URL in this task for hosted verification.
 
 | Setting                      | Value                                  |
 | ---------------------------- | -------------------------------------- |
@@ -53,7 +61,9 @@ No remote repository is configured locally yet.
 
 The lockfile controls dependency versions. Run `npm run check` before pushing a release; the
 host's build command checks types, builds, and checks bundle size but does not run browser tests.
-Repository CI is Step 12. The build reads Cloudflare's `CF_PAGES_URL` for absolute metadata when
+Repository CI is configured in `.github/workflows/ci.yml`; see the [release guide](./releasing.md).
+Cloudflare's Git build runs independently of GitHub CI, so only merge reviewed changes with passing checks.
+The build reads Cloudflare's `CF_PAGES_URL` for absolute metadata when
 `SITE_URL` is unset; set `SITE_URL` to the final production origin when ready to share that address.
 Cloudflare's free plan currently includes 500 builds/month. See the
 [Vite setup](https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite3-project/) and
@@ -96,5 +106,5 @@ if the ordinary npm command fails. macOS/Linux users can upload the `dist` folde
 - Pages supports rolling back to an earlier successful production deployment; a previous ZIP can
   also be deployed again. See [rollbacks](https://developers.cloudflare.com/pages/configuration/rollbacks/).
 
-The current account, hosting address, and hosted smoke-test results remain pending. Prices and
+The Cloudflare account connection, hosting address, and hosted smoke-test results remain pending. Prices and
 limits above describe the current free plan, not a guarantee about future provider policies.

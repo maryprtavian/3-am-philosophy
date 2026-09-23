@@ -402,3 +402,23 @@ Status: complete, 23 September 2026. Hosting and final URL-dependent metadata re
 See [production readiness](./production-readiness.md) for methods and results. No account was
 connected, no remote was configured, and no public deployment was made. The user can create the
 free Cloudflare account and choose dashboard upload or Git integration using the prepared guide.
+
+## Step 12 — GitHub repository and CI
+
+Status: implemented; first remote verification pending, 23 September 2026.
+
+The user supplied `https://github.com/maryprtavian/3-am-philosophy.git` and selected Git deployment.
+The repository was verified empty and public before the first push.
+
+- Added GitHub Actions for pushes and pull requests to `main`, plus manual dispatch.
+- A single standard Ubuntu runner installs Node 22, runs `npm ci`, installs Chromium and its
+  Linux dependencies, and runs the existing complete quality check. Actions use pinned SHAs,
+  read-only repository permissions, a ten-minute timeout, and cancellation of superseded runs.
+- Uses free standard runner execution for this public repository, with no artifact uploads or
+  dependency cache storage. No paid service or deployment credential was configured.
+- Added the [release guide](./releasing.md), linked content-authoring instructions, and updated
+  the Cloudflare handoff to the selected Git workflow.
+- CI and Cloudflare builds are independent. Branch protection and deployment are not configured;
+  the documented procedure is to review passing pull requests before merging into `main`.
+
+Verification results will be recorded after the initial push and GitHub run.
