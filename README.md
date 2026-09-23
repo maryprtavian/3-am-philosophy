@@ -2,8 +2,8 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–9 and 11 are complete; the broader Step 10 audit is deferred while manual testing continues.
-Step 12 adds GitHub CI; its first remote run is being verified.
+Steps 1–9 and 11–12 are complete; the broader Step 10 audit is deferred while manual testing continues.
+The project is pushed to GitHub, and its first clean Linux CI run passed.
 The responsive interface connects 51 authored questions across six
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
 back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance

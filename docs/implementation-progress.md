@@ -405,7 +405,7 @@ free Cloudflare account and choose dashboard upload or Git integration using the
 
 ## Step 12 — GitHub repository and CI
 
-Status: implemented; first remote verification pending, 23 September 2026.
+Status: complete, 23 September 2026.
 
 The user supplied `https://github.com/maryprtavian/3-am-philosophy.git` and selected Git deployment.
 The repository was verified empty and public before the first push.
@@ -421,4 +421,13 @@ The repository was verified empty and public before the first push.
 - CI and Cloudflare builds are independent. Branch protection and deployment are not configured;
   the documented procedure is to review passing pull requests before merging into `main`.
 
-Verification results will be recorded after the initial push and GitHub run.
+### Verification
+
+- Added `origin`, pushed the full local history and CI setup to `main`, and set upstream tracking.
+- [GitHub CI run 35872452751](https://github.com/maryprtavian/3-am-philosophy/actions/runs/35872452751)
+  passed for commit `756b1f083d2dd509e652f138d6ba7104a079c951` on a clean Ubuntu runner.
+- Lockfile installation, Chromium/Linux setup, TypeScript, ESLint, Prettier, 117 unit tests,
+  the production build/budget, and all 70 browser scenarios passed in GitHub Actions.
+- The result-recording commit changes documentation only and skips a redundant CI run. Application
+  code, dependencies, configuration, and the workflow match the verified commit.
+- Cloudflare account authorization, the hosted address, and hosted smoke checks remain Step 13.

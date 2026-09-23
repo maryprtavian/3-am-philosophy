@@ -40,9 +40,10 @@ from the beginning. Both routes can use the free plan.
 
 ## Git deployment for automatic updates
 
-This follows Steps 12–13 of the original roadmap. The user supplied
-[maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy), an empty public
-repository, for the initial push and CI setup. Once the first check passes:
+This follows Steps 12–13 of the original roadmap. The project is pushed to the public repository
+[maryprtavian/3-am-philosophy](https://github.com/maryprtavian/3-am-philosophy), and the
+[first CI run passed](https://github.com/maryprtavian/3-am-philosophy/actions/runs/35872452751).
+To connect hosting:
 
 1. Sign into your free Cloudflare account and open **Workers & Pages → Create application → Pages**.
 2. Choose **Import an existing Git repository / Connect to Git** and authorize access to this repository.
