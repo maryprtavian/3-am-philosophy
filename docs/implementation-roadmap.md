@@ -2,7 +2,7 @@
 
 The 3 A.M. Philosophy Button
 
-Status: Steps 01–09 are complete. Step 10 is next. Research and the exploratory UI concept are complete.
+Status: Steps 01–09 and 11 are complete. Step 10 is deferred at the user's request while manual testing continues. Steps 12–14 remain; no hosted deployment exists yet. Research and the exploratory UI concept are complete.
 
 This roadmap implements the decisions in [Design and technical direction](./design-and-technical-direction.md). Work through the steps in order. Each step should leave a working, reviewable result. Keep code changes focused, and add relevant tests alongside behavior rather than postponing all testing until the end.
 
@@ -171,6 +171,10 @@ and 90 complete answer sequences across the five themes.
 
 ## 10 — Complete accessibility and browser verification
 
+Deferred on 23 September 2026 at the user's request to proceed with Step 11. Initial manual testing
+was reported, but devices, browser versions, and detailed results have not been supplied. Existing
+Chromium checks remain in place; do not count this as the completed broader audit.
+
 **Work**
 
 - Add axe-core scans to meaningful Playwright states rather than scanning only the welcome page.
@@ -183,6 +187,10 @@ and 90 complete answer sequences across the five themes.
 **Done when:** automated checks pass and manual findings are resolved or explicitly recorded. Emulation must not be reported as real-device testing.
 
 ## 11 — Prepare the production build
+
+Completed on 23 September 2026. See the [production report](./production-readiness.md) and
+[free deployment guide](./free-deployment.md). URL-dependent metadata awaits the assigned hosting
+address as planned. Deployment and hosted verification remain Step 13.
 
 **Work**
 

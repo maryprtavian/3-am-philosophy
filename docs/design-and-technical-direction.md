@@ -3,7 +3,8 @@
 Research and proposed implementation direction — 23 September 2026.
 
 Status: research and a small interactive design concept are complete. Steps 01–09 now provide the
-responsive playable implementation, experience review, and 51-question library; see the
+responsive playable implementation, experience review, and 51-question library. Step 11 adds
+production preparation for free Cloudflare Pages hosting; Step 10 is deferred while manual testing continues. See the
 [roadmap](./implementation-roadmap.md) for current progress.
 The project directory was empty at the initial research inspection. The decisions below record the
 original direction, including verification still scheduled for later steps.

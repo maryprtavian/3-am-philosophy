@@ -1,6 +1,7 @@
 # Dependencies, generated output, and local tooling caches
 node_modules/
 dist/
+artifacts/
 coverage/
 .vitest/
 .npm-cache/

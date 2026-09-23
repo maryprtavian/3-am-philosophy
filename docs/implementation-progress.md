@@ -364,3 +364,41 @@ Status: complete, 23 September 2026.
 
 The content expansion is complete. Step 10 next performs the broader accessibility and browser
 verification, including axe, Firefox/WebKit, and the remaining manual checks where available.
+
+## Step 10 — Deferred verification
+
+On 23 September 2026, the user reported some initial manual testing and asked to proceed with
+Step 11 while continuing tests later. No device/browser inventory or detailed findings have been
+provided. The broader audit remains open; earlier Chromium verification still applies.
+
+## Step 11 — Production preparation and free hosting handoff
+
+Status: complete, 23 September 2026. Hosting and final URL-dependent metadata remain Step 13.
+
+### What changed
+
+- Added a readable static loading/reload fallback, a JavaScript-disabled view, handled app-module
+  initialization, and a React render-error boundary with focused recovery and a fresh-visit reload.
+- Added page metadata, theme colors, a moon favicon, and a typographic 1200 × 630 social image.
+  Final absolute sharing URLs are generated from `SITE_URL` or Cloudflare's build address.
+- Enforced a 150 kB gzip JavaScript budget and dashboard upload limits during production builds.
+- Added repeatable throttled mobile measurement and production browser checks without adding dependencies.
+- Prepared an upload ZIP and [free deployment instructions](./free-deployment.md). Cloudflare Pages
+  Free with its `pages.dev` address fits this static app; a purchased domain and paid services are unnecessary.
+
+### Verification
+
+- TypeScript, lint, formatting, 117 unit tests, 70 browser scenarios, and the production build/budget.
+- Failure cases cover blocked scripts, failed imports, initialization, rendering, and working reloads
+  on desktop/mobile. Corrected a test locator for text inside `noscript`; the displayed page was correct.
+- Offline interaction tests report zero requests after initial loading, including answers, backtracking,
+  a pause, another opening, and leaving. Existing content/history/layout checks continue to pass.
+- JavaScript: **77.15 kB gzip**; CSS: **1.98 kB gzip**; seven public files total.
+- Three throttled cold loads observed the opening button in **1.87–2.42 seconds** (median 2.06).
+  These are local emulation measurements, with gzip delivery, not hosted or real-device results.
+- Verified both metadata environment inputs and rejection of an insecure origin in in-memory builds.
+  Visually inspected the social image and the JavaScript-disabled mobile layout.
+
+See [production readiness](./production-readiness.md) for methods and results. No account was
+connected, no remote was configured, and no public deployment was made. The user can create the
+free Cloudflare account and choose dashboard upload or Git integration using the prepared guide.

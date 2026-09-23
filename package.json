@@ -11,7 +11,10 @@
   "packageManager": "npm@10.9.2",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/check-bundle.mjs",
+    "check:bundle": "node scripts/check-bundle.mjs",
+    "assets:social": "node scripts/render-social-card.mjs",
+    "measure:production": "node scripts/measure-production.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint . --max-warnings=0",
@@ -22,7 +25,7 @@
     "test:watch": "vitest",
     "test:e2e:install": "playwright install chromium --only-shell",
     "test:e2e": "tsc -b && vite build && playwright test",
-    "check": "tsc -b && eslint . --max-warnings=0 && prettier . --check && vitest run && vite build && playwright test"
+    "check": "tsc -b && eslint . --max-warnings=0 && prettier . --check && vitest run && vite build && node scripts/check-bundle.mjs && playwright test"
   },
   "dependencies": {
     "react": "^19.2.8",

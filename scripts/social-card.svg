@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#171819" />
+  <rect x="28" y="28" width="1144" height="574" rx="22" fill="none" stroke="#45473e" />
+  <path d="M1040 157a53 53 0 0 1-46-85 56 56 0 1 0 61 82c-5 2-10 3-15 3Z" fill="#dfb879" />
+  <circle cx="1046" cy="88" r="6" fill="#f1ecdf" />
+  <text x="90" y="152" fill="#dfb879" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">ONE BUTTON. TWO CHOICES.</text>
+  <text x="84" y="276" fill="#f1ecdf" font-family="Georgia, serif" font-size="90">3 A.M. Philosophy</text>
+  <text x="90" y="368" fill="#f1ecdf" font-family="Georgia, serif" font-size="42">A small question. A long way down.</text>
+  <path d="M90 429h84" stroke="#dfb879" stroke-width="2" />
+  <text x="90" y="496" fill="#adaea3" font-family="Arial, sans-serif" font-size="25">No right answers. No rush.</text>
+</svg>

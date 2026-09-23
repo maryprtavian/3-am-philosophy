@@ -2,7 +2,8 @@
 
 One button, strange philosophical questions, and branching rabbit holes.
 
-Steps 1–9 are complete. The responsive interface connects 51 authored questions across six
+Steps 1–9 and 11 are complete; the broader Step 10 audit is deferred while manual testing continues.
+The responsive interface connects 51 authored questions across six
 openings to the session engine. Start with one button, follow two-answer questions to a pause, go
 back, leave, or explore another rabbit hole. Refresh starts a new visit. Light/dark appearance
 follows the system, and answer layouts adapt to screen width and label length. Browser Back/Forward
@@ -31,21 +32,24 @@ local to your computer by default.
 
 ## Commands
 
-| Command                    | Purpose                                                                 |
-| -------------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`              | Start the development server with hot updates                           |
-| `npm run build`            | Type-check and build the static site into `dist/`                       |
-| `npm run preview`          | Serve the production build locally; run `build` first                   |
-| `npm run typecheck`        | Check the app and Vite configuration with TypeScript                    |
-| `npm run lint`             | Run ESLint, treating warnings as failures                               |
-| `npm run lint:fix`         | Apply automatic lint fixes where available                              |
-| `npm run format`           | Format project files with Prettier                                      |
-| `npm run format:check`     | Check formatting without changing files                                 |
-| `npm test`                 | Run content validation, library, and session behavior tests once        |
-| `npm run test:watch`       | Rerun tests as files change                                             |
-| `npm run test:e2e:install` | Install Playwright's headless Chromium browser                          |
-| `npm run test:e2e`         | Type-check, build, and run browser journey and layout tests             |
-| `npm run check`            | Run type checks, lint, formatting, unit tests, build, and browser tests |
+| Command                      | Purpose                                                                 |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`                | Start the development server with hot updates                           |
+| `npm run build`              | Type-check and build the static site into `dist/`                       |
+| `npm run check:bundle`       | Check the built JS budget and static upload limits                      |
+| `npm run assets:social`      | Regenerate the committed social PNG from its SVG source                 |
+| `npm run measure:production` | Measure three throttled mobile loads against preview on port 4176       |
+| `npm run preview`            | Serve the production build locally; run `build` first                   |
+| `npm run typecheck`          | Check the app and Vite configuration with TypeScript                    |
+| `npm run lint`               | Run ESLint, treating warnings as failures                               |
+| `npm run lint:fix`           | Apply automatic lint fixes where available                              |
+| `npm run format`             | Format project files with Prettier                                      |
+| `npm run format:check`       | Check formatting without changing files                                 |
+| `npm test`                   | Run content validation, library, and session behavior tests once        |
+| `npm run test:watch`         | Rerun tests as files change                                             |
+| `npm run test:e2e:install`   | Install Playwright's headless Chromium browser                          |
+| `npm run test:e2e`           | Type-check, build, and run browser journey and layout tests             |
+| `npm run check`              | Run type checks, lint, formatting, unit tests, build, and browser tests |
 
 `preview` is a local build check, not a production hosting server. Vitest runs the validator,
 library, and session behavior tests in Node. Playwright tests the production build in headless
@@ -65,7 +69,14 @@ Failure traces and screenshots go in the ignored `test-results/` directory. The 
 saves full-page review images there. See the [first playable version notes](docs/first-playable.md)
 and [responsive design notes](docs/responsive-design.md) for layout coverage. The
 [navigation notes](docs/navigation-and-interaction.md) explain history, refresh, interaction tests,
-and remaining verification. There are currently 117 unit tests and 56 browser tests.
+and remaining verification. There are currently 117 unit tests and 70 browser tests.
+
+## Free hosting
+
+Use Cloudflare Pages Free and the supplied `pages.dev` address. No backend or paid domain is needed.
+The [deployment guide](docs/free-deployment.md) explains dashboard upload and optional Git integration,
+including the tradeoff between them. The [production report](docs/production-readiness.md) records
+the asset budget, recovery behavior, and throttled mobile measurements. The site is not deployed yet.
 
 ## Source layout
 
@@ -79,6 +90,7 @@ src/
 public/            Static assets copied into the build
 e2e/               Playwright browser journeys against the production build
 docs/              Research, implementation roadmap, and progress notes
+scripts/           Bundle budget, social-card rendering, and performance measurement
 ```
 
 Keep questions separate from the UI, and keep traversal logic independent of React. Use CSS Modules
@@ -128,3 +140,5 @@ installation.
 - [Short user tryout guide](docs/tryout-guide.md)
 - [Full library review](docs/library-review.md)
 - [Complete route inventory](docs/library-route-inventory.md)
+- [Production readiness and measurements](docs/production-readiness.md)
+- [Free deployment guide](docs/free-deployment.md)

@@ -5,13 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="One button, strange philosophical questions, and branching rabbit holes."
+      content="One button. Two choices. Strange philosophical questions and rabbit holes to wander down. No accounts, no scores, no rush."
     />
-    <title>3 A.M. Philosophy</title>
+    <title>3 A.M. Philosophy — A small question. A long way down.</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#171819" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="3 A.M. Philosophy" />
+    <meta property="og:title" content="3 A.M. Philosophy" />
+    <meta
+      property="og:description"
+      content="A small question. A long way down. One button, two choices, and strange philosophical rabbit holes."
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="3 A.M. Philosophy. A small question. A long way down. An amber moon on a charcoal background."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="3 A.M. Philosophy" />
+    <meta
+      name="twitter:description"
+      content="A small question. A long way down. One button, two choices, and strange philosophical rabbit holes."
+    />
+    <meta
+      name="twitter:image:alt"
+      content="3 A.M. Philosophy. A small question. A long way down. An amber moon on a charcoal background."
+    />
+    <!-- This small fallback stays readable even when the application assets fail to load. -->
+    <style>
+      .recovery-panel {
+        box-sizing: border-box;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: max(2rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
+          max(2rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        font:
+          1rem/1.6 system-ui,
+          sans-serif;
+        background: #f5f0e7;
+        color: #282923;
+      }
+      body:has(.recovery-panel) {
+        margin: 0;
+      }
+      .recovery-panel > * {
+        box-sizing: border-box;
+        width: min(100%, 38rem);
+        margin: 0 auto 1.5rem;
+      }
+      .recovery-panel h1 {
+        font:
+          400 clamp(2rem, 7vw, 3rem)/1.2 Georgia,
+          serif;
+      }
+      .recovery-panel a {
+        width: auto;
+        max-width: 100%;
+        min-height: 44px;
+        padding: 0.75rem 1rem;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        color: inherit;
+        text-align: center;
+      }
+      .recovery-panel :focus-visible {
+        outline: 3px solid #80501c;
+        outline-offset: 5px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .recovery-panel {
+          background: #171819;
+          color: #f1ecdf;
+        }
+        .recovery-panel :focus-visible {
+          outline-color: #dfb879;
+        }
+      }
+    </style>
+    <noscript
+      ><style>
+        #root {
+          display: none;
+        }
+      </style></noscript
+    >
   </head>
   <body>
-    <div id="root"></div>
-    <noscript>This experience needs JavaScript to explore its questions.</noscript>
+    <div id="root">
+      <main class="recovery-panel" aria-labelledby="loading-title">
+        <p>3 A.M. Philosophy</p>
+        <h1 id="loading-title">A thought is on its way.</h1>
+        <p>Opening your rabbit hole… If nothing appears, check your connection and reload.</p>
+        <a href="">Reload and try again</a>
+      </main>
+    </div>
+    <noscript>
+      <main class="recovery-panel" aria-labelledby="noscript-title">
+        <p>3 A.M. Philosophy</p>
+        <h1 id="noscript-title">A little curiosity needs JavaScript.</h1>
+        <p>
+          Enable JavaScript in your browser, then reload to explore the questions. Your answers stay
+          in this tab.
+        </p>
+        <a href="">Reload and begin</a>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
